@@ -17,16 +17,15 @@
     {/foreach}
 </div>
 <script type="text/javascript">
-$(window).load(function() {
-    $('#AnonceSlider').nivoSlider(
-    	{
-    		{if sizeof($anounces_anounces)==1}directionNav: false,{/if}
-    		controlNav: false,
-    		controlNavThumbs: false,
-    		prevText: '&lsaquo;',
-    		nextText: '&rsaquo;'
-    	}
-    );
-});
+
+$('#AnonceSlider').nivoSlider(
+	{
+		{if sizeof($anounces_anounces)==1}directionNav: false,{/if}
+		controlNav: false,
+		controlNavThumbs: false,
+		prevText: '&lsaquo;',
+		nextText: '&rsaquo;'
+	}
+);
 </script>
 {/if}

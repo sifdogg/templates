@@ -16,16 +16,16 @@
     {/foreach}
 </div>
 <script type="text/javascript">
-$(window).load(function() {
-    $('#SlideShow').nivoSlider(
-    	{
-    		{if sizeof($images)==1}directionNav: false,{/if}
-    		controlNav: false,
-    		controlNavThumbs: false,
-    		prevText: '&lsaquo;',
-    		nextText: '&rsaquo;'
-    	}
-    );
-});
+
+$('#SlideShow').nivoSlider(
+	{
+		{if sizeof($images)==1}directionNav: false,{/if}
+		controlNav: false,
+		controlNavThumbs: false,
+		prevText: '&lsaquo;',
+		nextText: '&rsaquo;'
+	}
+);
+
 </script>
 {/if}
