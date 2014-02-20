@@ -1,4 +1,6 @@
-
+{if $GLOBS.currency.code neq 'RUR' && $GLOBS.currency.code neq 'RUB'}
+{assign var=summ value=ceil($summ/$GLOBS.allcurrencies.RUB.course)}
+{/if}
 <form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml" class="payment-form pull-left">
    <input name="receiver" type="hidden" value="{$GLOBS.merchants.yandexmoney.uid}">
    <input name="label" type="hidden" value="{$order_id}:{$order_content.email}">
