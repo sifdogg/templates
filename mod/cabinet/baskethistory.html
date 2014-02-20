@@ -1,4 +1,5 @@
 {$text}
+{if $GLOBS.merchants.invoice}
 <div id="invoce-req" class="hide">
 	<h2 align="center">Наши реквизиты</h2>
 	<table class="table table-striped table-hover">
@@ -38,6 +39,7 @@
 		</tr>
 	</table>
 </div>
+{/if}
 {if sizeof($cabinetbaskethistory_orders)>0}
 <script>
 var duplicateOrder = function (order_id, order_hash)
@@ -60,7 +62,7 @@ var duplicateOrder = function (order_id, order_hash)
 <a name="order_id_{$order_id}"></a>
 <div>
 	<big><b>Заказ №{$order_id}</b></big> от <em>{$order.content.created|date_format:"%d %B %Y"}</em>,
-	на сумму <b>{$order.content.summ|price:false} {numeral number=$order.content.summ ends=$GLOBS.allcurrencies[$order.content.currency].name}</b>
+	на сумму <b>{$order.content.summ|price:false} {numeral number=$order.content.summ ends=$GLOBS.allcurrencies[$order.content.currency].name}</b>{if $order.content.discount}, накопительная скидка <b>{$order.content.discount.human}</b>{/if}{if $order.content.coupon}, купон на скидку <b>{$order.content.coupon.human}</b>{/if}
 	{if $GLOBS.order_status[$order.content.status]}
 		<span class="badge
 		{if $order.content.status eq 'A'}{/if}
@@ -130,7 +132,6 @@ var duplicateOrder = function (order_id, order_hash)
 	<th>Скидка</th>
 	<th>Цена</th>
 	<th>Сумма</th>
-	<th></th>
 </tr>
 </thead>
 <tbody>
@@ -154,10 +155,10 @@ var duplicateOrder = function (order_id, order_hash)
         </p>
         {/if}
     </td>
-    <td>{$product.count}</td>
+    <td>{$product.count} {numeral number=$product.count ends=$product.content.units|default:'шт.,шт.,шт.'}</td>
     <!--td>{$product.oldprice|price:false}{$GLOBS.allcurrencies[$order.content.currency].shortname}</td>
     <td>{$product.oldtotal|price:false}{$GLOBS.allcurrencies[$order.content.currency].shortname}</td-->
-    <td>{if $product.discount}{$product.discount}{else}&mdash;{/if}</td>
+    <td>{if $product.discount}{$product.discount.human}{else}&mdash;{/if}</td>
     <td>{$product.price|price:false}{$GLOBS.allcurrencies[$order.content.currency].shortname}</td>
     <td>{$product.total|price:false}{$GLOBS.allcurrencies[$order.content.currency].shortname}</td>
   </tr>

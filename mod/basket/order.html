@@ -12,7 +12,7 @@
 		<article style="margin-top:15px;">
 			<div class="hero-unit">
 				<h1>Номер вашего заказа <u>{$order_id}</u></h1>
-				<p>Сумма вашего заказа составила <b>{$order_total|price:false} {numeral number=$order_total ends=$GLOBS.currency.name}</b>, спасибо, что выбрали наш магазин.</p>
+				<p>Сумма вашего заказа составила <b>{$order_total|price:false} {numeral number=$order_total ends=$GLOBS.currency.name}</b>{if $order_content.discount}, накопительная скидка <b>{$order_content.discount.human}</b>{/if}{if $order_content.coupon}, использован купон на скидку <b>{$order_content.coupon.human}</b>{/if}. Спасибо, что выбрали наш магазин.</p>
 				{$text}
 				{if $GLOBS.user_id neq 6}
 				<p>Историю заказов можно посмотреть в <a href="/cabinet/history.html">личном кабинете</a>.</p>
@@ -84,9 +84,10 @@
 				    <div class="caption">
 					    <h5><a href="{$item.vlink}">{$item.content.name}</a></h5>
 						<p>
-							Цена: {$item.content.price|price}<br />
-							{if $item.content.oldprice!=$item.content.price}<s>Цена: {$item.content.oldprice|price}</s><br />{/if}
-							Всего за <b>{$item.count} шт.</b> &mdash; {($item.content.price*$item.count)|price}
+							Цена: {$item.price|price} {if $item.oldprice!=$item.price}<s>{$item.oldprice|price}</s>{/if}<br />
+							{if $item.discount}Скидка: <b>{$item.discount.human}</b><br />{/if}
+							
+							Всего за <b>{$item.count}  {numeral number=$item.count ends=$item.content.units|default:'шт.,шт.,шт.'}</b> &mdash; {($item.price*$item.count)|price}
 						</p>
 				    </div>
 				  </div>

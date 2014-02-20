@@ -11,9 +11,9 @@
 				<select name="params[{$oid}][{$name}]" style="width:80%;" class="input-xlarge" id="selectParams_{$name}">
 				{foreach from=$field.values item=item key=key}
 				{if $item.editable eq 'true'}
-				<option value="{$key}" data-price="{$item.price|discount:$discount}" data-oldprice="{$item.price}" data-type="{$item.type}" data-name="{$item.name}">
+				<option value="{$key}" data-price="{$item.price|discount:$discount}" data-oldprice="{$item.price}" data-type="{$item.type}" data-name="{$item.name}" {if $smarty.get.$name eq $item.name}selected{/if}>
 					{$item.name}
-				
+					
 					{if $item.price && $item.type eq 'plus'},
 					дополнительно {$item.price|discount:$discount|price:false} {numeral number=$item.price|discount:$discount|price:false ends=$GLOBS.currency.name}
 					{elseif $item.price}
@@ -46,30 +46,55 @@
 		    var $elevate = $('#mimage').data('elevateZoom');
 
 			var params_images = [];
-			$(".inbasket select").change(function()
+			$('.thumbnails a.thumbnail').each(function()
 			{
-				var param_name = $(this).children(":selected").data('name');
-				
-				if(params_images.length == 0)
-				$('.thumbnails a.thumbnail').each(function()
-				{
-					if($(this).children('img').attr('alt'))
-						params_images.push({
-							'name' : $(this).children('img').attr('alt'),
-							'image' : $(this).data('image'),
-							'zoom-image' : $(this).data('zoom-image')
-						});
-				});
-
+				if($(this).children('img').attr('alt'))
+					params_images.push({
+						'name' : $(this).children('img').attr('alt'),
+						'image' : $(this).data('image'),
+						'zoom-image' : $(this).data('zoom-image')
+					});
+			});
+			var SelectImage = function(param_name)
+			{
 				for(var i=0;i<params_images.length;i++)
 				{
 					if( params_images[i]['name'] == param_name )
 					{
+						console.log(params_images[i]['zoom-image']);
+						
 						$elevate.zoomImagePre = params_images[i]['zoom-image'];
 						$elevate.swaptheimage(params_images[i]['image'], $elevate.zoomImagePre);
+						break;
 					}
 				}
+			};
+			$(".inbasket select").change(function()
+			{
+				var param_name = $(this).children(":selected").data('name');
+				SelectImage(param_name);
 			});
+			$(".inbasket select option:selected").each(function()
+			{
+				var param_name = $(this).data('name');
+				SelectImage(param_name);
+			});
+{*
+			if(window.location.search)
+			{
+				var params = decodeURI(window.location.search);
+				params = params.split('?');
+				params = params.slice(1);
+				params = params[0].split('&');
+				
+				for( index in params)
+				{
+					var param = params[index].split('=');
+					//$('#selectParams_' + param[0]).find('option:contains("'+param[1]+'")').attr("selected",true).change();
+					SelectImage(param[1]);
+				}
+			}
+*}
 		});
 	</script>
 	
