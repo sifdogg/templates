@@ -10,7 +10,7 @@
 		<input type="hidden" name="lifetime" value="1080.0"/>
 		<input type="hidden" name="check_agt" value="{$GLOBS.merchants.qiwi.check_agt}"/>
     	<input type="hidden" name="txn_id" value="{$order_id}"/>
-    	<input type="hidden" name="amount_rub" value="{$summ}" />
+    	<input type="hidden" name="amount_rub" value="{$summ|price:false:false}" />
 		<p style="text-align:center; color:#006699; padding:20px 0px; background:url(https://ishop.qiwi.ru/img/button/logo_31x50.jpg) no-repeat 10px 50%;">Выставить счёт за покупку</p>
 		<table style="border-collapse:collapse;width:100%;">
 			<tr style="background:#f1f5fa;">
