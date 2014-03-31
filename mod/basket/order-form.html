@@ -7,6 +7,20 @@
 			<div class="span6">
 			{foreach from=$orderfields item=item name=fieldscounter}
 				{if $item.editable eq 'true'}
+				{if $item.htmltype eq 'datefield'}
+				{assign var=datepicker value=1}
+				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
+					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<div class="controls">
+						{if $order_fields[$item.name]['value']}
+						<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']}" placeholder="{$item.description}" style="width:97%;" />
+						{else}
+						<input type="text" class="datefield" id="input{$item.name|capitalize}" name="{$item.name}" value="{if $GLOBS.userdata[$item.name] neq 'guest'}{$GLOBS.userdata[$item.name]}{/if}" placeholder="{$item.description}" style="width:97%;" data-date-format="dd.mm.yyyy" data-date="01.01.2014" />
+						{/if}
+						{if $order_fields[$item.name]['error']} <span class="help-inline">Обязательно для заполнения</span>{/if}
+					</div>
+				</div>
+				{/if}
 				{if $item.htmltype eq 'textfield'}
 				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
 					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
@@ -23,7 +37,7 @@
 				
 				{if $item.htmltype eq 'combostore'}
 				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
-					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<label class="control-label" for="select{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
 					<div class="controls">
 						<select name="{$item.name}" id="select{$item.name|capitalize}" style="width:100%;">
 						{foreach from=$GLOBS[$item.name] item=field_item key=field_item_key}
@@ -132,6 +146,10 @@
 			{if $orderwelcome}<span class="help-inline">{$orderwelcome}</span>{/if}
 			<button type="submit" class="btn btn-primary">Подтвердить заказ</button>
 		</div>
-
 	<script>$(document).ready(function(){ $("input[name*=antispam]").val('{$antispam}'); });</script>
 </form>
+{if $datepicker}
+<link rel="stylesheet" type="text/css" href="/media0/css/datepicker.css" media="screen" />
+<script type="text/javascript" src="/media0/js/bootstrap-datepicker.js"></script>
+<script>$(document).ready(function(){ $('.datefield').datepicker(); });</script>
+{/if}

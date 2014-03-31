@@ -14,6 +14,7 @@
 			{include file="$TMPL_FOLDER/mod/pathline.html"}
 		</div>
 		<article class="product">
+			{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 			{include file="$TMPL_FOLDER/mod/anounces.html"}
 			{if $annotate}<p class="lead">{$annotate}</p>{/if}
 		    <div class="row-fluid">

@@ -173,7 +173,10 @@
 
 				{/foreach}
 				<input type="hidden" name="page" value="0" />
-				<p class="filters-submit"><button type="submit" class="btn btn-success">Показать</button></p>
+				<p class="filters-submit">
+					<button type="submit" class="btn btn-success">Показать</button>
+					{if $directories_filters_query}<a href="." class="btn btn-link btn-small">Сбросить фильтры</a>{/if}
+				</p>
 			</form>
 		</div>
 	</section>

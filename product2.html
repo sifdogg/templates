@@ -15,6 +15,7 @@
 		</div>
 		<article class="product">
 			{if $annotate}<p class="lead">{$annotate}</p>{/if}
+			{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 			{include file="$TMPL_FOLDER/mod/anounces.html"}
 			<div class="row-fluid">
 				<div class="span6">{include file="$TMPL_FOLDER/product-blocks/images.html"}</div>

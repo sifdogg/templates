@@ -3,7 +3,7 @@
 {if $reg_success==1 && $act_success!=1 && $act_success!=2 && !$fog_success}
 	<div class="alert alert-success">
 	<strong>Спасибо за регистрацию</strong><br />
-	<p>Мы выслали письмо с указанными логином ({$register_fields.login.value}) и паролем, на Ваш электронную почту "{$register_fields.email.value}". В данный момент Ваша учетная запись <b>НЕ</b> активирована. Проверьте почту и активируйте учетную запись, пройдя по ссылке указанной в письме.</p>
+	<p>Мы выслали письмо с указанными логином ({$register_fields.login.value}) и паролем, на Вашу электронную почту "{$register_fields.email.value}". В данный момент Ваша учетная запись <b>НЕ</b> активирована. Проверьте почту и активируйте учетную запись, пройдя по ссылке указанной в письме.</p>
 	</div>
 {/if}
 
@@ -107,7 +107,7 @@
 					</div>
 				</div>
 				{/if}
-				{if $GLOBS.userdata.discount}<span class="help-inline" style="line-height:22px;">Скидка <b>{$GLOBS.userdata.discount}%</b></span>{/if}
+				{if $GLOBS.userdata.discount}<span class="help-inline" style="line-height:22px;">Скидка <b>{$GLOBS.userdata.discount.human}</b></span>{/if}
 				<p class="help-block">Ваша активность на сайте определяется количеством комментариев, статей и покупок. Чем выше Ваш уровень активности, тем выше скидка, которую вы получите при покупке. </p>
             </div>
           </div>
@@ -181,6 +181,18 @@
 					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
 					<div class="controls">
 						<input type="text" id="input{$item.name|capitalize}" class="input-xlarge" name="{$item.fieldname}" value="{$item.value}">
+						{if $item.error}<span class="help-inline">{$reg_errors[$item.checked]}</span>{/if}
+			            {if $item.description}<p class="help-block">{$item.description}</p>{/if}
+					</div>
+				</div>
+				{/if}
+				
+				{if $item.htmltype eq 'datefield'}
+				{assign var=datepicker value=1}
+				<div class="control-group {if $item.error} error{/if}">
+					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<div class="controls">
+						<input type="text" id="input{$item.name|capitalize}" class="datefield input-xlarge" name="{$item.fieldname}" value="{$item.value}" data-date-format="dd.mm.yyyy" data-date="01.01.2014">
 						{if $item.error}<span class="help-inline">{$reg_errors[$item.checked]}</span>{/if}
 			            {if $item.description}<p class="help-block">{$item.description}</p>{/if}
 					</div>
@@ -400,4 +412,9 @@
           </div>
         </fieldset>
       </form>
+{/if}
+{if $datepicker}
+<link rel="stylesheet" type="text/css" href="/media0/css/datepicker.css" media="screen" />
+<script type="text/javascript" src="/media0/js/bootstrap-datepicker.js"></script>
+<script>$(document).ready(function(){ $('.datefield').datepicker(); });</script>
 {/if}

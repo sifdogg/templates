@@ -10,8 +10,9 @@
    <input name="comment-needed" type="hidden" value="false">
    <input name="quickpay-form" type="hidden" value="shop">
    <input type="hidden" name="targets" value="{$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
+   <input name="formcomment" type="hidden" value="{$GLOBS.SITENAME|escape}: {$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
+   <input name="short-dest" type="hidden" value="{$GLOBS.SITENAME|escape}: {$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
    <input data-type="number" type="hidden" name="sum" value="{($summ*1.005)|replace:',':'.'}">
-   <!-- button type="submit" name="submit-button" class="btn">{$GLOBS.merchants.yandexmoney.btn|default:'Оплатить через Яндекс.Деньги'}</button-->
    <button type="submit" name="submit-button" class="btn btn-large" title="{$GLOBS.merchants.yandexmoney.btn|default:'Оплатить через Яндекс.Деньги'}" rel="tooltip"><img src="/media0/img/merchants/Yandex.png" alt="Яндекс.Деньги" width="150" /></button>
 </form>
 
@@ -25,6 +26,8 @@
    <input name="comment-needed" type="hidden" value="false">
    <input name="quickpay-form" type="hidden" value="shop">
    <input type="hidden" name="targets" value="{$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
+   <input name="formcomment" type="hidden" value="{$GLOBS.SITENAME|escape}: {$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
+   <input name="short-dest" type="hidden" value="{$GLOBS.SITENAME|escape}: {$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
    <input data-type="number" type="hidden" name="sum" value="{($summ*1.02)|replace:',':'.'}">
    <button type="submit" name="submit-button" class="btn btn-large" title="Оплатить через Visa или MasterCard" rel="tooltip"><img src="/media0/img/merchants/VisaMasterYandex.png" alt="Visa и MasterCard через Яндекс.Деньги" width="150" /></button>
 </form>

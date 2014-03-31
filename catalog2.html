@@ -12,6 +12,7 @@
 		</div>
 		{include file="$TMPL_FOLDER/inc/topbar.html"}
 		<section>
+			{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 			{include file="$TMPL_FOLDER/mod/anounces.html"}
 			{if $annotate}<p class="lead">{$annotate}</p>{/if}
 	    {if sizeof($directories_pubs)>0}

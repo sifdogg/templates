@@ -147,6 +147,13 @@ var duplicateOrder = function (order_id, order_hash)
     	<a href="{$product.content.vlink}">
     		{$product.content.name}
     	</a>
+		{if $order.content.pay_status eq 'FP' && $product.content.paid_files}
+		<p>
+		{foreach from=$product.content.paid_files item=paid_file}
+		<a class="btn btn-default" href="/basket/?paid_file={$product.oid}|{$paid_file.path}" target="_blank" title="Ссылка будет действовать в течении часа"><i class="icon-download-alt"></i> Скачать &laquo;{$paid_file.name}&raquo;</a>
+		{/foreach}
+		</p>
+		{/if}
         {if sizeof($product.params)>0}
         <p><b>Опции : </b>
         {foreach from=$product.params key=key item=value}

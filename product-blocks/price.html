@@ -21,13 +21,7 @@
 	    		{if $discount.money}{$discount.money|price:false} {numeral number=$discount.money|price:false ends=$GLOBS.currency.name}{/if}
 			</span>
 			{if $discount.date_to_days < 30}
-			<div class="coundown" data-date="{$discount.date_to}">
-				<em class="icon-time"></em>
-				<span class=days></span>
-				<span class=hours></span>
-				<span class=minutes></span>
-				<span class=seconds></span>
-			</div>
+			<div class="coundown" data-date="{$discount.date_to}"></div>
 			{/if}
 		</div>
 		

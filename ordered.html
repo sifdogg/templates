@@ -16,7 +16,16 @@
     </div>
   </div>
 {/if}
-
+{if $field.htmltype eq 'datefield'}
+{assign var=datepicker value=1}
+<script></script>
+  <div class="control-group {if $field.error}error{/if}">
+    <label class="control-label" for="input{$field.name|capitalize}">{$field.runame}{if $field.necessary eq 'true'} <span style="color:#9F305F;">*</span> {/if}</label>
+    <div class="controls">
+      <input type="text" class="datefield" data-date-format="dd.mm.yyyy" data-date="01.01.2014" id="input{$field.name|capitalize}" name="{$field.name}" style="width:300px;" value="{$field.value}" placeholder="{$field.description}" />
+    </div>
+  </div>
+{/if}
 {if $field.htmltype eq 'textarea'}
   <div class="control-group {if $field.error}error{/if}">
     <label class="control-label" for="textarea{$field.name|capitalize}">{$field.runame}{if $field.necessary eq 'true'} <span style="color:#9F305F;">*</span> {/if}</label>
@@ -60,9 +69,16 @@
   </div>
 </fieldset>
 </form>
+{if $datepicker}
+<link rel="stylesheet" type="text/css" href="/media0/css/datepicker.css" media="screen" />
+<script type="text/javascript" src="/media0/js/bootstrap-datepicker.js"></script>
+{/if}
 <script>
 $(document).ready(function(){
 	$("input[name*=antispam]").val('{$antispam}');
+	{if $datepicker}
+	$('.datefield').datepicker();
+	{/if}
 	$('#order_form').on('submit', function() {
 	    $(this).ajaxSubmit({
 	    	success: function(responseText){

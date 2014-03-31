@@ -12,6 +12,7 @@
 		</div>
 		<article class="publish">
 			{if $annotate}<p class="lead">{$annotate}</p>{/if}
+			{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 			{include file="$TMPL_FOLDER/mod/anounces.html"}
 			{if $ext_socialposting}
 			<div class="alert alert-info" style="float:right;display:inline-block;">
