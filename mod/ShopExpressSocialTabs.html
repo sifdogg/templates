@@ -1,15 +1,6 @@
-
 <link href="/media0/css/social-tabs.css" rel="stylesheet">
 <script src="/media0/js/jquery.wiwi.js"></script>
 
-{if $shopexpresssocialtabs_fb}
-<div class="widget facebook">
-	<div class="flag"></div>
-	<div class="fb-like-box" data-href="https://www.facebook.com/{$shopexpresssocialtabs_fb}" data-width="400" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
-	<div id="fb-root"></div>
-	<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
-</div>
-{/if}
 {if $shopexpresssocialtabs_vk}
 <div class="widget vk">
 	<div class="flag"></div>
@@ -21,12 +12,22 @@
 	</script>
 </div>
 {/if}
-{if $shopexpresssocialtabs_map}
-<div class="widget map">
+{if $shopexpresssocialtabs_fb}
+<div class="widget facebook">
 	<div class="flag"></div>
-	{$shopexpresssocialtabs_map}
+	<div class="fb-like-box" data-href="https://www.facebook.com/{$shopexpresssocialtabs_fb}" data-width="400" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
 </div>
 {/if}
+{if $shopexpresssocialtabs_twitter}
+<div class="widget twitter">
+	<div class="flag"></div>
+	{$shopexpresssocialtabs_twitter}
+<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
+</div>
+{/if}
+
 {if $shopexpresssocialtabs_ok}
 <div class="widget odkl">
 	<div class="flag"></div>
@@ -49,9 +50,17 @@
 	</script>
 </div>
 {/if}
+{if $shopexpresssocialtabs_map}
+<div class="widget map">
+	<div class="flag"></div>
+	{$shopexpresssocialtabs_map}
+</div>
+{/if}
+
 <script>
 !function ($) {
 $(function(){
+{if $shopexpresssocialtabs_twitter}$.wiwis({ selector : '.twitter' });{/if}
 {if $shopexpresssocialtabs_fb}$.wiwis({ selector : '.facebook' });{/if}
 {if $shopexpresssocialtabs_vk}$.wiwis({ selector : '.vk' });{/if}
 {if $shopexpresssocialtabs_map}$.wiwis({ selector : '.map' });{/if}
