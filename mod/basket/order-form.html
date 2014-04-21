@@ -69,6 +69,7 @@
 					<label class="control-label" for="select{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
 					<div class="controls">
 						<select name="delivery" id="select{$item.name|capitalize}" style="width:100%;">
+							<option value="">Выберите тип доставки</option>
 							{foreach from=$delivery item=delivery_item key=delivery_key}
 							<option value="{$delivery_key}"
 									{if $GLOBS.delivery[$delivery_item.name]}data-value="{$delivery_item.name}"{/if}

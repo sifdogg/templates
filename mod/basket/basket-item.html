@@ -5,14 +5,46 @@
 	    <td>
 		    <h3>
 			    <a href="{$item.vlink}">{$item.content.name}</a>
-			    <sup class="badge badge-success {if $basketdiscount || (!$item.content.discount.percent && !$item.content.discount.money)}hide{/if}">
-			    	Скидка
-			    		<span class="discount">
-				    		{if $item.content.discount.percent}{$item.content.discount.percent}% {if $item.content.discount.money} и {/if}{/if}
-				    		{if $item.content.discount.money}{$item.content.discount.money|price:false} {numeral number=$item.content.discount.money|price:false ends=$GLOBS.currency.name}{/if}
-			    		</span>
+			    <sup class="badge badge-success  {if $basketdiscount || !$item.content.discount}hide{/if}">
+			    	Скидка <span class="discount">{$item.content.discount.human}</span>
 			    </sup>
 			</h3>
+			
+{*<!--
+			для смены спецификаций в корзине
+			<form action="/basket/?action=set" method="post">
+				{foreach from=$item.params_fieldnames item=param_fieldname}
+				{if $item.content.$param_fieldname|editable_count}
+				<div>
+					<label for="selectParams_{$param_fieldname}">
+						<small>{$GLOBS.fieldnames[7][$param_fieldname]}</small>
+					</label>
+					<select name="params[{$item.real_oid}][{$param_fieldname}]" id="selectParams_{$param_fieldname}" style="font-size:13px;line-height:13px;height:auto;width:80%;" data-oid="{$item.oid}">
+					{foreach from=$item.content.$param_fieldname item=field_value key=field_value_index}
+					{if $field_value.editable eq 'true'}
+					<option value="{$field_value_index}"
+						data-price="{$field_value.price|discount:$item.content.discount}"
+						data-oldprice="{$field_value.price}"
+						data-type="{$field_value.type}"
+						data-name="{$field_value.name}"
+						{if $item.params.$param_fieldname eq $field_value_index}selected{/if}>
+						{$field_value.name}
+						{if $field_value.price && $field_value.type eq 'plus'},
+						дополнительно {$field_value.price|discount:$item.content.discount|price:false} {numeral number=$field_value.price|discount:$item.content.discount|price:false ends=$GLOBS.currency.name}
+						{elseif $field_value.price}
+						, цена {$field_value.price|discount:$item.content.discount|price:false} {numeral number=$field_value.price|discount:$item.content.discount|price:false ends=$GLOBS.currency.name}
+						{else}
+						{/if}
+					</option>
+					{/if}
+					{/foreach}
+					</select>
+				</div>
+				{/if}
+				{/foreach}
+			</form>
+-->*}
+
 		    {if sizeof($item.params)>0}
 		    <p><b>Опции : </b>
 		    <small>
@@ -28,6 +60,7 @@
 		    {/if}
 	    </td>
 	    <td nowrap="nowrap">
+	    	<!--input class="count" type="text" name="count" value="{$item.count}" step="1" data-oid="{$item.oid}" data-href="/basket/?action=set" style="width:40px;" /-->
 	    	<span class="count">
 		    	{$item.count} {numeral number=$item.count ends=$item.content.units|default:'шт.,шт.,шт.'}
 	    	</span>
@@ -40,6 +73,7 @@
 	    	<span class="price"
 	    			data-oldprice="{$item.content.oldprice|price:false}"
 	    			data-price="{$item.content.price|price:false}"
+	    			data-realprice="{$item.content.realprice|price:false}"
 	    			data-count="{$item.count}"
 	    			data-units="{$item.content.units|default:'шт.,шт.,шт.'}"
 	    			data-currency="{$GLOBS.currency.name}"

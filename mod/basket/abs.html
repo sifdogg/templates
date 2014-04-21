@@ -43,6 +43,7 @@ var discounts = [];
     </td>
     
     <td nowrap="nowrap">
+	    <!--input class="count" type="text" name="count" value="{$item.count}" step="1" data-oid="{$item.oid}" data-href="/basket/?action=set" style="width:40px;" /-->
     	<span class="count">
 	    	{$item.count} {numeral number=$item.count ends=$item.content.units|default:'шт.,шт.,шт.'}
     	</span>
