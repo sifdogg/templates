@@ -160,6 +160,15 @@
 						{/if}
 					{/foreach}
 					</p>
+				{else if $directories_filters_type[$name] eq 'empty'}
+					<p class="filters-content">
+						{foreach from=$filter_field item=item}
+						<label>
+							<input type="checkbox" value="{$item.value|escape}" name="filter[{$name}][]" {if $item.checked}checked="checked"{/if} />
+							{$item.value|escape}
+						</label>
+						{/foreach}
+					</p>
 				{else if $directories_filters_type[$name] eq 'styled_string'}
 					<p class="filters-content">
 					{foreach from=$filter_field item=item name="forn"}
