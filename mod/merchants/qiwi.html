@@ -6,7 +6,7 @@
 	<form action="http://w.qiwi.ru/setInetBill_utf.do" method="POST" accept-charset="UTF-8">
 	 	{if $GLOBS.currency.code neq 'RUR' && $GLOBS.currency.code neq 'RUB'}{assign var=summ value=ceil($summ/$GLOBS.allcurrencies.RUB.course)}{/if}
 	 	<!-- {$summ}/{$GLOBS.allcurrencies.RUB.course} -->
-		<input type="hidden" name="from" value="{$GLOBS.merchants.qiwi.id}"/>
+		<input type="hidden" name="from" value="{if $GLOBS.merchants.qiwi.shop_id}{$GLOBS.merchants.qiwi.shop_id}{else}{$GLOBS.merchants.qiwi.id}{/if}"/>
 		<input type="hidden" name="lifetime" value="1080.0"/>
 		<input type="hidden" name="check_agt" value="{$GLOBS.merchants.qiwi.check_agt}"/>
     	<input type="hidden" name="txn_id" value="{$order_id}"/>
