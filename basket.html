@@ -70,6 +70,7 @@
 				var moneyRound = {$GLOBS.currency.round|default:0};
 				var discounts = [];
 				{foreach from=$discounts item=discount}discounts.push( { 'percent' : {$discount.percent|default:0}, 'money' : {$discount.money|default:0}, 'price_from' : {$discount.price_from}, 'price_to' : {$discount.price_to}, 'count_from' : {$discount.count_from}, 'count_to' : {$discount.count_to}, 'date_to_seconds' : {$discount.date_to_seconds}, 'date_from_seconds' : {$discount.date_from_seconds}, 'type': '{$discount.type}' } );{/foreach}
+				var minTotal = '{$mintotal}';
 				</script>
 				{/if}
 				<script>var eShopPostIndex = '{$postindex}';</script>
@@ -102,7 +103,14 @@
 				{/if}
 			</section>
 			<br clear="all" />
-			<section class="orderform-content">
+
+			{if $mintotal}
+			<div class="well mintotal {if $mintotal <= $oldtotal}hide{/if}">
+				<h4 align="center">Минимальная сумма заказа {$mintotal|price}</h4>
+			</div>
+			{/if}
+			
+			<section class="orderform-content {if $mintotal && $mintotal > $oldtotal}hide{/if}">
 				<div class="page-header">
 					<h1>Оформление заказа</h1>
 				</div>
