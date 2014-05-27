@@ -115,10 +115,9 @@
 					<h1>Оформление заказа</h1>
 				</div>
 
-				{if $GLOBS.user_id eq 6}
-					<div class="well">{$text}</div>
-				{/if}
 				
+				{if $text}<div class="well {if $GLOBS.user_id eq 6}hide{/if}">{$text}</div>{/if}
+
 				{include file="$TMPL_FOLDER/mod/basket/order-form.html"}
 			</section>
 		{else}
