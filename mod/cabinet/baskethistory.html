@@ -72,6 +72,7 @@ var duplicateOrder = function (order_id, order_hash)
 		{if $order.content.status eq 'M'}badge-success{/if}
 		{if $order.content.status eq 'O'}badge-info{/if}
 		{if $order.content.status eq 'C'}badge-success{/if}
+		{if $order.content.status eq 'S'}badge-success{/if}
 		{if $order.content.status eq 'V'}badge-info{/if}
 		{if $order.content.status eq 'Z'}badge-important{/if}
 		{if $order.content.status eq 'R'}badge-warning{/if}
