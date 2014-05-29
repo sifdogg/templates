@@ -34,7 +34,44 @@
 					</div>
 				</div>
 				{/if}
-				
+				{if $item.htmltype eq 'adresfield'}
+				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
+					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<div class="controls">
+						{if $order_fields[$item.name]['value']}
+						<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']}" placeholder="{$item.description}" style="width:97%;">
+						{else}
+						<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{if $GLOBS.userdata[$item.name] neq 'guest'}{$GLOBS.userdata[$item.name]}{/if}" placeholder="{$item.description}" style="width:97%;">
+						{/if}
+						{if $order_fields[$item.name]['error']} <span class="help-inline">Обязательно для заполнения</span>{/if}
+					</div>
+				</div>
+				<link href="https://dadata.ru/static/css/suggestions-4.3.css" type="text/css" rel="stylesheet" />
+				<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+				<!--[if lt IE 10]>
+				<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+				<![endif]-->
+				<script type="text/javascript" src="https://dadata.ru/static/js/jquery.suggestions-4.3.min.js"></script>
+				<script type="text/javascript">
+				    $("#input{$item.name|capitalize}").suggestions({
+				        serviceUrl: "https://dadata.ru/api/v2/suggest/address",
+				        type: "ADDRESS",
+				/*         token: "ВАШ API-КЛЮЧ", */
+				        /* Вызывается, когда пользователь выбирает одну из подсказок */
+				        onSelect: function(suggestion) {
+				            console.log(suggestion);
+				            if($('#inputPostindex').length)
+				            	$('#inputPostindex').val(suggestion.data.postal_code);
+				            else
+				            {
+				            	$("#input{$item.name|capitalize}").closest('form').append(
+					            	$('<input />').attr('id', 'inputPostindex').attr('name', 'postindex').attr('type', 'hidden').val(suggestion.data.postal_code)
+				            	)
+				            }
+				        }
+				    });
+				</script>
+				{/if}
 				{if $item.htmltype eq 'combostore'}
 				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
 					<label class="control-label" for="select{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
