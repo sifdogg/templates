@@ -38,7 +38,16 @@
 				</div>
 				
 				{/if}
-				
+				{if $basket_notify}
+				<div class="alert alert-info">
+				    <p><b>Извините</b><br>
+				    В данный момент выбранного товара нет в достаточном количестве:</p>
+				    <b class="inbasket-item">{$basket_notify.name} ({$basket_notify_count} {numeral number=$basket_notify_count ends=$basket_notify.units|default:'шт.,шт.,шт.'})</b>
+				    {if sizeof($basket_notify_params)>0}
+				    {foreach from=$basket_notify_params key=key item=value}<br />&mdash; {$GLOBS.fieldnames[7][$key]}: {$basket_notify[$key][$value]['name']} {/foreach}
+				    {/if}
+				</div>
+				{/if}
 				<table class="table table-striped">
 				<thead>
 				  <tr>
@@ -65,12 +74,12 @@
 				{* вывод сразу всех накопительных скидок *}
 				{if sizeof($discounts)}
 				<script>
-				var totalUserSpent = {$GLOBS.userdata.totalUserSpent|default:0};
-				var totalUserCount = {$GLOBS.userdata.totalUserCount|default:0};
+				var totalUserSpent = {$totalUserSpent|default:0};
+				var totalUserCount = {$totalUserCount|default:0};
 				var moneyRound = {$GLOBS.currency.round|default:0};
 				var discounts = [];
 				{foreach from=$discounts item=discount}discounts.push( { 'percent' : {$discount.percent|default:0}, 'money' : {$discount.money|default:0}, 'price_from' : {$discount.price_from}, 'price_to' : {$discount.price_to}, 'count_from' : {$discount.count_from}, 'count_to' : {$discount.count_to}, 'date_to_seconds' : {$discount.date_to_seconds}, 'date_from_seconds' : {$discount.date_from_seconds}, 'type': '{$discount.type}' } );{/foreach}
-				var minTotal = '{$mintotal}';
+				{if $mintotal}var minTotal = '{$mintotal}';{/if}
 				</script>
 				{/if}
 				<script>var eShopPostIndex = '{$postindex}';</script>

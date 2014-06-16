@@ -77,7 +77,7 @@
 			Выберите количество
 		</label>
 		<div class="controls">
-			<input type="number" name="count" class="count input-small" value="1" step="0.1" min="1" />
+			<input type="number" name="count" class="count input-small" value="1" step="0.1" min="1" max="{$quantity}" />
 		</div>
 	</div>
 	<div class="page-header">
@@ -94,10 +94,10 @@
 	{if $price}
 	{if $ext_basketextendedhelpers && $basketextendedhelpers_pageBtn}
 	{if $basketextendedhelpers_pageBtn eq 1}
-	<button type="submit" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i> В корзину</button> или 
-	<button type="button" class="btn btn-success inbasket"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</button>
+	<button type="submit" class="btn btn-primary" {if $quantity == '0'}disabled{/if}><i class="icon-shopping-cart icon-white"></i> В корзину</button> или 
+	<button type="button" class="btn btn-success inbasket" {if $quantity == '0'}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить в один клик</button>
 	{elseif $basketextendedhelpers_pageBtn eq 2}
-	<button type="button" class="btn btn-success inbasket"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</button>
+	<button type="button" class="btn btn-success inbasket" {if $quantity == '0'}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить в один клик</button>
 	{/if}
 	{else}
 	<button type="submit" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i> Купить</button>
