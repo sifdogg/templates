@@ -14,16 +14,19 @@
 		{if sizeof($basketdata)}
 			<section class="basket-content">
 				
-				{if $coupon.coupon_id}
+				{if $coupon}
 				<div class="coupon-alert alert {if !$coupon.status}alert-error{else}hide{/if}">
+					<a class="close" data-dismiss="alert" href="#">&times;</a>
 					{if !$coupon.statuses.date}<li>Время купона истекло.{/if}
 					{if !$coupon.statuses.price}<li>Сумма заказа не подходит. {/if}
 					{if !$coupon.statuses.count}<li>Количество товаров слишком мало. {/if}
 					{if !$coupon.statuses.used}<li>Купон уже использовали максимальное количество раз. {/if}
+					{if !$coupon.statuses.fake}<li>Такого купона не существует. {/if}
 					{if !$coupon.statuses.self_used}<li>Вы активировали купон ранее. {/if}
 				</div>
-				
+				{if $coupon.coupon_id}				
 				<div class="alert alert-success">
+					<a class="close" data-dismiss="alert" href="#">&times;</a>
 					Вы активировали купон <b>{$coupon.name}</b> на скидку в {if $coupon.percent} <b>{$coupon.percent}%</b> {if $coupon.money} и {/if}{/if} {if $coupon.money} <b>{$coupon.money} {numeral number=$coupon.money ends=$GLOBS.currency.name}</b>{/if} <br>
 					{if $coupon.count_from || $coupon.count_to || $coupon.price_from || $coupon.price_to}
 					При покупке
@@ -36,18 +39,18 @@
 					Время действия до {$coupon.date_to|date_format:"%d %B"}.
 					<a href="?coupon_destroy">Не использовать купон в этом заказе.</a>
 				</div>
-				
 				{/if}
-				{if $basket_notify}
-				<div class="alert alert-info">
+				{/if}
+				<div class="alert alert-info {if !$basket_notify}hide{/if}">
 				    <p><b>Извините</b><br>
 				    В данный момент выбранного товара нет в достаточном количестве:</p>
 				    <b class="inbasket-item">{$basket_notify.name} ({$basket_notify_count} {numeral number=$basket_notify_count ends=$basket_notify.units|default:'шт.,шт.,шт.'})</b>
 				    {if sizeof($basket_notify_params)>0}
 				    {foreach from=$basket_notify_params key=key item=value}<br />&mdash; {$GLOBS.fieldnames[7][$key]}: {$basket_notify[$key][$value]['name']} {/foreach}
 				    {/if}
+				    <a class="close" data-dismiss="alert" href="#">&times;</a>
 				</div>
-				{/if}
+
 				<table class="table table-striped">
 				<thead>
 				  <tr>
