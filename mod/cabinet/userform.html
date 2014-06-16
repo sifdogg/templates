@@ -186,7 +186,32 @@
 					</div>
 				</div>
 				{/if}
-				
+				{if $item.htmltype eq 'adresfield'}
+				<div class="control-group {if $item.error} error{/if}">
+					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<div class="controls">
+						<input type="text" id="input{$item.name|capitalize}" class="input-xlarge" name="{$item.fieldname}" value="{$item.value}">
+						{if $item.error}<span class="help-inline">{$reg_errors[$item.checked]}</span>{/if}
+			            {if $item.description}<p class="help-block">{$item.description}</p>{/if}
+					</div>
+				</div>
+				<link href="https://dadata.ru/static/css/suggestions-4.3.css" type="text/css" rel="stylesheet" />
+				<!--[if lt IE 10]>
+				<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+				<![endif]-->
+				<script type="text/javascript" src="https://dadata.ru/static/js/jquery.suggestions-4.3.min.js"></script>
+				<script type="text/javascript">
+				    $("#input{$item.name|capitalize}").suggestions({
+				        serviceUrl: "https://dadata.ru/api/v2/suggest/address",
+				        type: "ADDRESS",
+						token: "b94c274fc11fbd3fa9f26c57047e57d0287ab91f",
+				        onSelect: function(suggestion) {
+				            if($('#inputPostindex').length)
+				            	$('#inputPostindex').val(suggestion.data.postal_code);
+				        }
+				    });
+				</script>
+				{/if}								
 				{if $item.htmltype eq 'datefield'}
 				{assign var=datepicker value=1}
 				<div class="control-group {if $item.error} error{/if}">
