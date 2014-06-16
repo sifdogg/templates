@@ -41,14 +41,14 @@
 				</div>
 				{/if}
 				{/if}
-				<div class="alert alert-info {if !$basket_notify}hide{/if}">
+				<div class="basket-alert alert alert-error {if !$basket_notify}hide{/if}">
+				    <a class="close" data-dismiss="alert" href="#">&times;</a>
 				    <p><b>Извините</b><br>
 				    В данный момент выбранного товара нет в достаточном количестве:</p>
 				    <b class="inbasket-item">{$basket_notify.name} ({$basket_notify_count} {numeral number=$basket_notify_count ends=$basket_notify.units|default:'шт.,шт.,шт.'})</b>
 				    {if sizeof($basket_notify_params)>0}
 				    {foreach from=$basket_notify_params key=key item=value}<br />&mdash; {$GLOBS.fieldnames[7][$key]}: {$basket_notify[$key][$value]['name']} {/foreach}
 				    {/if}
-				    <a class="close" data-dismiss="alert" href="#">&times;</a>
 				</div>
 
 				<table class="table table-striped">

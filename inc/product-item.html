@@ -37,15 +37,15 @@
 			</p>
 			{if $ext_basketextendedhelpers && $basketextendedhelpers_pageBtn}
 			{if $basketextendedhelpers_sectionBtn eq 1}
-			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if $content.quantity == '0'}hidden{/if}" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>
-			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-success btn-mini inbasket {if $content.quantity == '0'}hidden{/if}" rel="nofollow" data-tmpl="fast"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</a>
+			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>
+			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-success btn-mini inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow" data-tmpl="fast"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</a>
 			{elseif $basketextendedhelpers_sectionBtn eq 2}
-			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-success btn-mini inbasket {if $content.quantity == '0'}hidden{/if}" rel="nofollow" data-tmpl="fast"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</a>
+			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-success btn-mini inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow" data-tmpl="fast"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</a>
 			{else}
-			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if $content.quantity == '0'}hidden{/if}" rel="nofollow" {if $content.quantity == '0'}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить</a>
+			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow" {if isset($content.quantity) && $content.quantity <= 0}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить</a>
 			{/if}
 			{else}
-			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if $content.quantity == '0'}hidden{/if}" rel="nofollow" {if $content.quantity == '0'}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить</a>
+			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow" {if isset($content.quantity) && $content.quantity <= 0}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить</a>
 			{/if}
 
 			{else}
