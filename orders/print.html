@@ -92,7 +92,7 @@ hr {
 	<td colspan=8>Скидка {$order.discount.human}</td>
 </tr>
 {/if}
-{if $order.delivery_id}
+{if $order.delivery}
 <tr>
 	<td></td>
 	<td colspan=7>Доставка: {if $GLOBS.delivery[$order.delivery]}{$GLOBS.delivery[$order.delivery]}{else}{$order.delivery}{/if}</td>
