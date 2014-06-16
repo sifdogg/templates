@@ -1,5 +1,6 @@
 {if $basket_notify}
 <div class="alert alert-info">
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
     <p class="basket-item inbasket-item"><b>Извините</b><br>
     В данный момент выбранного товара нет в достаточном количестве:</p>
     <b>{$basket_notify.name} ({$basket_notify_count} {numeral number=$basket_notify_count ends=$basket_notify.units|default:'шт.,шт.,шт.'})</b>
@@ -21,6 +22,7 @@ var discounts = [];
 </script>
 
 <script>var eShopPostIndex = '{$postindex}';</script>
+<section class="basket-content">
 <table class="table table-striped" style="width:640px;">
 <thead>
   <tr>
@@ -86,7 +88,7 @@ var discounts = [];
 {/foreach}
 </tbody>
 </table>
-
+</section>
 <blockquote class="pull-right">
 	<p>
 		<span id="basketCount">{$count}</span> шт. на сумму: <b><span id="basketTotal">{$total|price:false}</span> {numeral number=$total|price:false ends=$GLOBS.currency.name}</b><br />
