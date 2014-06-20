@@ -35,6 +35,7 @@
 					<small>{if $content.discount}<s>Старая цена {$content.price|price}</s>{else if $content.old_price}<s>Старая цена {$content.old_price|price}</s>{/if}</small>
 				{/if}
 			</p>
+
 			{if $ext_basketextendedhelpers && $basketextendedhelpers_pageBtn}
 			{if $basketextendedhelpers_sectionBtn eq 1}
 			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>

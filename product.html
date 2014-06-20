@@ -1,4 +1,5 @@
 {if $smarty.get.tmpl eq 'abs'}
+{* для добавления в корзину не открывая сам товар , показывает форму со спецификациями *}
 <form class="inbasket" action="/basket/" method=post align=center>
 	{if sizeof($basketparams_fields)>0}
 	<fieldset>
@@ -39,7 +40,6 @@
 	<!-- можно использовать стрелки на клавиатуре, чтобы указать менять количество -->
 	<input type="number" name="count" class="count" value="1" step="0.5"/><br>
 	*}
-
 	
 	<input type="hidden" name="action" value="add" />
 	<input type="hidden" name="count" class="count" value="1" />
@@ -88,6 +88,12 @@
 		{include file="$TMPL_FOLDER/mod/objectsattached.html"}
 		{include file="$TMPL_FOLDER/mod/productlast.html"}
 		{include file="$TMPL_FOLDER/mod/newsline.html"}
+		<!-- productbuyedwith -->
+		{include file="$TMPL_FOLDER/mod/productbuyedwith.html"}
+		<!-- /productbuyedwith -->
+		<!-- productsimilar -->
+		{include file="$TMPL_FOLDER/mod/productsimilar.html"}
+		<!-- productsimilar -->
 		{include file="$TMPL_FOLDER/mod/productpurchased.html"}
 		{include file="$TMPL_FOLDER/mod/productchecked.html"}
 		{include file="$TMPL_FOLDER/mod/productdiscount.html"}
