@@ -96,7 +96,7 @@ hr {
 <tr>
 	<td></td>
 	<td colspan=7>Доставка: {if $GLOBS.delivery[$order.delivery]}{$GLOBS.delivery[$order.delivery]}{else}{$order.delivery}{/if}</td>
-    <td nowrap="nowrap">{$order.delivery_price|price:false} {numeral number=$order.delivery_price ends=$GLOBS.allcurrencies[$order.currency].name}</td>
+	<td nowrap="nowrap">{if $order.delivery_price}{$order.delivery_price|price:false} {numeral number=$order.delivery_price ends=$GLOBS.allcurrencies[$order.currency].name}{else}бесплатно{/if}</td>
 </tr>
 {/if}
 </table>

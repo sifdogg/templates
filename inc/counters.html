@@ -4,6 +4,7 @@
 	
 	ga('create', '{$GLOBS.GOOGLECOUNTER}', 'auto');
 	ga('require', 'ecommerce', 'ecommerce.js');
+	ga('require', 'displayfeatures');
 	ga('send', 'pageview');
 	ga('set', '&uid', '{$GLOBS.userdata.login}');
 
@@ -40,11 +41,11 @@
 			if( category_name.length == 0 ) name_category = 'Главная страница';
 			if( product_name.length == 0 ) name_product = $(this).attr('href');
 			
-			ga('send', 'event', 'in-cart', 'click', category_name, product_name );
+			ga('send', 'event', 'В корзину', category_name, product_name );
 	
 		});
 		$('form.inbasket').click( function(){
-			ga('send', 'event', 'in-cart', 'click', 'Товар', '{$name}' );
+			ga('send', 'event', 'В корзину', 'Страница товара', '{$name}' );
 		});
 	});
 </script>

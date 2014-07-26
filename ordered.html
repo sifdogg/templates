@@ -4,11 +4,13 @@
 <script>
 $(document).ready(function()
 {
+	{if $GLOBS.YACOUNTER && $GLOBS.YACOUNTER|strpos:'Например' !== 0}
 	try { yaCounter{$GLOBS.YACOUNTER}.hit('http://{$GLOBS.SITEHOST}{$vlink}?post'); yaCounter{$GLOBS.YACOUNTER}.reachGoal('PostBackForm'); }
 	catch(e)
 	{
 		//console.log('Счетчик Яндекс.Метрика не установлен.');
 	}
+	{/if}
 });
 </script>
 {else}
@@ -100,11 +102,13 @@ $(document).ready(function()
 <script>
 $(document).ready(function()
 {
+	{if $GLOBS.YACOUNTER && $GLOBS.YACOUNTER|strpos:'Например' !== 0}
 	try { yaCounter{$GLOBS.YACOUNTER}.hit('http://{$GLOBS.SITEHOST}{$vlink}'); yaCounter{$GLOBS.YACOUNTER}.reachGoal('OpenBackForm'); }
 	catch(e)
 	{
 		//console.log('Счетчик Яндекс.Метрика не установлен.');
 	}
+	{/if}
 
 	$("input[name*=antispam]").val('{$antispam}');
 	{if $datepicker}
