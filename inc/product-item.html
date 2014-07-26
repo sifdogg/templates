@@ -7,6 +7,9 @@
 		
 		<div class="caption">
 			<h5><a href="{$item.vlink}">{$content.name}</a>
+			
+			{if $content.rank}<br />{section name=poprank loop=$content.rank step=1}<img src="/media0/img/icon-star.png" width="8"/>{/section}{section name=poprank loop=5-$content.rank step=1}<img src="/media0/img/icon-star-no.png" width="8" />{/section}{/if}
+			
 		{if $content.available eq 'no'}<span class="label label-important">Продано</span>{/if}
 		{*if $content.available eq 'wait'}<span class="label label-warning">Ожидается</span>{/if*}
 		{*if $content.available eq 'never'}<span class="label label-important">Продано</span>{/if*}
