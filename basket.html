@@ -80,6 +80,7 @@
 				var totalUserSpent = {$totalUserSpent|default:0};
 				var totalUserCount = {$totalUserCount|default:0};
 				var moneyRound = {$GLOBS.currency.round|default:0};
+				var GlobalCurrency = '{$GLOBS.currency.name|default:''}';
 				var discounts = [];
 				{foreach from=$discounts item=discount}discounts.push( { 'percent' : {$discount.percent|default:0}, 'money' : {$discount.money|default:0}, 'price_from' : {$discount.price_from}, 'price_to' : {$discount.price_to}, 'count_from' : {$discount.count_from}, 'count_to' : {$discount.count_to}, 'date_to_seconds' : {$discount.date_to_seconds}, 'date_from_seconds' : {$discount.date_from_seconds}, 'type': '{$discount.type}' } );{/foreach}
 				{if $mintotal}var minTotal = '{$mintotal}';{/if}
@@ -128,7 +129,7 @@
 				</div>
 
 				
-				{if $text}<div class="well {if $GLOBS.user_id eq 6}hide{/if}">{$text}</div>{/if}
+				{if $text}<div class="well {if $GLOBS.user_id neq 6}hide{/if}">{$text}</div>{/if}
 
 				{include file="$TMPL_FOLDER/mod/basket/order-form.html"}
 			</section>
