@@ -111,16 +111,21 @@
 	<input type="hidden" name="time" value="{$smarty.now}" />
 
 	{if $price}
+	{if isset($quantity) && $quantity <= 0}
+		<span class="label label-important">Продано</span>
+	{else}
 	{if $ext_basketextendedhelpers && $basketextendedhelpers_pageBtn}
 	{if $basketextendedhelpers_pageBtn eq 1}
-	<button type="submit" class="btn btn-primary" {if isset($quantity) && $quantity <= 0}disabled{/if}><i class="icon-shopping-cart icon-white"></i> В корзину</button> или 
-	<button type="button" class="btn btn-success inbasket" {if isset($quantity) && $quantity <= 0}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить в один клик</button>
+	<button type="submit" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i> В корзину</button> или 
+	<button type="button" class="btn btn-success inbasket"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</button>
 	{elseif $basketextendedhelpers_pageBtn eq 2}
-	<button type="button" class="btn btn-success inbasket" {if isset($quantity) && $quantity <= 0}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить в один клик</button>
+	<button type="button" class="btn btn-success inbasket"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</button>
 	{/if}
 	{else}
-	<button type="submit" class="btn btn-primary" {if isset($quantity) && $quantity <= 0}disabled{/if}><i class="icon-shopping-cart icon-white"></i> Купить</button>
+	<button type="submit" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i> Купить</button>
 	{/if}
+	{/if}
+	
 	{/if}
 	
 	{if $ext_productscompared || $ext_bookmarked && $GLOBS.user_id neq 6}&nbsp;&mdash;<ul class="bookmark-list-unstyled">{/if}
