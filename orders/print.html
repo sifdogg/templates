@@ -96,13 +96,13 @@ hr {
 <tr>
 	<td></td>
 	<td colspan=7>Доставка: {if $GLOBS.delivery[$order.delivery]}{$GLOBS.delivery[$order.delivery]}{else}{$order.delivery}{/if}</td>
-	<td nowrap="nowrap">{if $order.delivery_price}{$order.delivery_price|price:false} {numeral number=$order.delivery_price ends=$GLOBS.allcurrencies[$order.currency].name}{else}бесплатно{/if}</td>
+    <td nowrap="nowrap">{if $order.delivery_price}{$order.delivery_price|price:false} {numeral number=$order.delivery_price ends=$GLOBS.allcurrencies[$order.currency].name}{else}бесплатно{/if}</td>
 </tr>
 {/if}
 </table>
 <table class="table noborder">
 	<tr>
-		<td align="left" valign="top">Всего наименований {$order.count} шт.</td>
+		<td align="left" valign="top">Общее количество {$order.countUnits} шт.</td>
 		<td align="right" valign="top"><h2>Итого: {$order.summ|price:false} {numeral number=$order.summ ends=$GLOBS.allcurrencies[$order.currency].name}</h2></td>
 	</tr>
 </table>
