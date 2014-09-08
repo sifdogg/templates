@@ -41,7 +41,7 @@
 </form>
 {/if}
 
-{if $GLOBS.merchants.yandexmoney_ur['АС']}
+{if $GLOBS.merchants.yandexmoney_ur['AC']}
 <form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form pull-left">
 <input type="hidden" name="cms_name" value="difocus">
 <input name="shopId" value="{$GLOBS.merchants.yandexmoney_ur.uid}" type="hidden"/> 
@@ -52,7 +52,7 @@
 <input name="shopSuccessURL" value="http://{$GLOBS.SITE_HOST}/basket/? {$order_id}%7C{$order_hash}" type="hidden"/> 
 <input name="shopFailURL" value="http://{$GLOBS.SITE_HOST}/basket/? {$order_id}%7C{$order_hash}" type="hidden"/> 
 
-<input name="paymentType" value="АС" type="hidden"/> 
+<input name="paymentType" value="AC" type="hidden"/> 
 <input name="orderNumber" value="{$order_id}" type="hidden"/>
 <input name="cps_phone" value="{$order_content.phone}" type="hidden"/> 
 <input name="cps_email" value="{$order_content.email}" type="hidden"/>
