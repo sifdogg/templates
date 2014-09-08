@@ -12,7 +12,7 @@
    <input name="targets" type="hidden" value="{$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
    <input name="formcomment" type="hidden" value="{$GLOBS.SITENAME|escape}: {$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
    <input name="short-dest" type="hidden" value="{$GLOBS.SITENAME|escape}: {$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
-   {if $GLOBS.merchants.yandexmoney.commission}
+   {if empty($GLOBS.merchants.yandexmoney.commission)}
    <input name="sum" data-type="number" type="hidden" value="{if $summ*0.005<0.1}{$summ+0.1}{else}{($summ*1.005)|replace:',':'.'}{/if}">
    {else}
    <input name="sum" data-type="number" type="hidden" value="{$summ|replace:',':'.'}">
@@ -32,7 +32,7 @@
    <input type="hidden" name="targets" value="{$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
    <input name="formcomment" type="hidden" value="{$GLOBS.SITENAME|escape}: {$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
    <input name="short-dest" type="hidden" value="{$GLOBS.SITENAME|escape}: {$GLOBS.merchants.yandexmoney.serviceName|default:'Оплата заказа №'}{$order_id}">
-   {if $GLOBS.merchants.yandexmoney.commission}
+   {if empty($GLOBS.merchants.yandexmoney.commission)}
    <input name="sum" data-type="number" type="hidden" value="{($summ*1.02041)|string_format:"%.2f"|replace:',':'.'}">
    {else}
    <input name="sum" data-type="number" type="hidden" value="{$summ|replace:',':'.'}">
