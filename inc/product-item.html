@@ -7,8 +7,7 @@
 		
 		<div class="caption">
 			<h5><a href="{$item.vlink}">{$content.name}</a>
-			
-			{if $content.rank}<br />{section name=poprank loop=$content.rank step=1}<img src="/media0/img/icon-star.png" width="8"/>{/section}{section name=poprank loop=5-$content.rank step=1}<img src="/media0/img/icon-star-no.png" width="8" />{/section}{/if}
+			{if $content.rank}<br />{section name=poprank loop=$content.rank step=1}<i class="star-rating star-rating-on"></i>{/section}{section name=poprank loop=5-$content.rank step=1}<i class="star-rating"></i>{/section}{/if}
 			
 		{if $content.available eq 'no'}<span class="label label-important">Продано</span>{/if}
 
