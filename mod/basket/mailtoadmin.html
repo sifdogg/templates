@@ -39,7 +39,7 @@
 							{if $GLOBS.SITENAME && $GLOBS.PHONE && $GLOBS.MAIL}
 							<tr bgcolor="{cycle values="#ffffff,#f5f5f5"}">
 								<td colspan="2" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
-									<a href="http://vcard.difocus.ru/?N={$GLOBS.SITENAME|escape:'url'}&ORG={$GLOBS.SITENAME|escape:'url'}&TEL={$GLOBS.PHONE|escape:'url'}&EMAIL={$GLOBS.MAIL|escape:'url'}&URL=http:%2F%2F{$site_host|escape:'url'}&NOTE=Номер%20заказа%20{$order_id},%20Сумма%20заказа%20{$order_total|price|escape:'url'}&item1%2EURL=http:%2F%2F{$site_host|escape}%2Fbasket%2F?action=showorder%26id={$order_id}%26oh={$order_hash}&item1%2EX-ABLabel=Адрес%20заказа%20{$order_id}"><img src="http://vcard.difocus.ru/vcard.png" width="16" height="16" style="float:left; margin-right:5px;" /> Скачать карточку компании и данные заказа в vCard</a>
+									<a href="http://vcard.difocus.ru/?N={$GLOBS.SITENAME|escape:'url'}&ORG={$GLOBS.SITENAME|escape:'url'}&TEL={$GLOBS.PHONE|escape:'url'}&EMAIL={$GLOBS.MAIL|escape:'url'}&URL=http:%2F%2F{$site_host|escape:'url'}&NOTE=Номер%20заказа%20{$order_id},%20Сумма%20заказа%20{$order_total|price|escape:'url'}&item1%2EURL=http:%2F%2F{$site_host|escape}%2Fbasket%2F?{$order_id}%7C{$order_hash}&item1%2EX-ABLabel=Адрес%20заказа%20{$order_id}"><img src="http://vcard.difocus.ru/vcard.png" width="16" height="16" style="float:left; margin-right:5px;" /> Скачать карточку компании и данные заказа в vCard</a>
 								</td>
 							</tr>
 							{/if}
@@ -151,7 +151,7 @@
 							</tr>
 							<tr>
 								<td style="border-collapse: collapse;border: none; font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;" colspan="7">
-									<p style="font-size:14px;font-family: 'trebuchet ms', geneva;"><a href="http://{$site_host}/basket/?action=showorder&id={$order_id}&oh={$order_hash}">Постоянный адрес заказа</a></p>
+									<p style="font-size:14px;font-family: 'trebuchet ms', geneva;"><a href="http://{$site_host}/basket/?{$order_id}%7C{$order_hash}">Постоянный адрес заказа</a></p>
 								</td>
 							</tr>
 							</table>

@@ -19,7 +19,7 @@
 				{else}
 				<p class="welcome-unit">Вы можете <a href="/cabinet/">зарегистрироваться</a> у нас в магазине и использовать все привилегии наших постоянных клиентов.</p>
 				{/if}
-				<p class="pull-right"><a href="/basket/?action=showorder&id={$order_id}&oh={$order_hash}"><small>Постоянный адрес заказа №{$order_id}</small></a></p>
+				<p class="pull-right"><a href="/basket/?{$order_id}%7C{$order_hash}"><small>Постоянный адрес заказа №{$order_id}</small></a></p>
 			</div>
 
 			{if $GLOBS.merchants && $order_content.pay_status neq 'FP' && $order_content.pay_method eq 'NON'}

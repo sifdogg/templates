@@ -58,7 +58,7 @@
 				        onSelect: function(suggestion)
 				        {
 				            $('#hiddenPostindex').val(suggestion.data.postal_code).change();
-				            $('#hiddenCity').val(suggestion.data.city).change();
+				            $('#hiddenCity').val(suggestion.data.city?suggestion.data.city:suggestion.data.region).change();
 				            $('#hiddenRegion').val(suggestion.data.region).change();
 				        }
 				    });
