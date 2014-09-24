@@ -1,0 +1,27 @@
+{if $coupon}
+<div class="coupon-alert alert {if !$coupon.status}alert-error{else}hide{/if}">
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
+	{if !$coupon.statuses.date}<li>Время купона истекло.{/if}
+	{if !$coupon.statuses.price}<li>Сумма заказа не подходит. {/if}
+	{if !$coupon.statuses.count}<li>Количество товаров слишком мало. {/if}
+	{if !$coupon.statuses.used}<li>Купон уже использовали максимальное количество раз. {/if}
+	{if !$coupon.statuses.fake}<li>Такого купона не существует. {/if}
+	{if !$coupon.statuses.self_used}<li>Вы активировали купон ранее. {/if}
+</div>
+{if $coupon.coupon_id}				
+<div class="alert alert-success">
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
+	Вы активировали купон <b>{$coupon.name}</b> на скидку в {if $coupon.percent} <b>{$coupon.percent}%</b> {if $coupon.money} и {/if}{/if} {if $coupon.money} <b>{$coupon.money} {numeral number=$coupon.money ends=$GLOBS.currency.name}</b>{/if} <br>
+	{if $coupon.count_from || $coupon.count_to || $coupon.price_from || $coupon.price_to}
+	При покупке
+	{if $coupon.count_from} <u>от {$coupon.count_from} {numeral number=$coupon.count_from ends="вещи, вещей, вещей"}</u>{/if}
+	{if $coupon.count_to} до {$coupon.count_to} {numeral number=$coupon.count_from ends="вещи, вещей, вещей"}{/if}
+	{if $coupon.price_from || $coupon.price_to} на общую сумму {/if}
+	{if $coupon.price_from} <u>от {$coupon.price_from} {numeral number=$coupon.price_from|price:false ends=$GLOBS.currency.name}</u>{/if}
+	{if $coupon.price_to} до {$coupon.price_to} {numeral number=$coupon.price_to|price:false ends=$GLOBS.currency.name}{/if}.
+	{/if}
+	Время действия до {$coupon.date_to|date_format:"%d %B"}.
+	<a href="?coupon_destroy">Не использовать купон в этом заказе.</a>
+</div>
+{/if}
+{/if}

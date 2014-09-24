@@ -75,13 +75,13 @@
 									<p>{$item.content.annotate}</p>
 								</td>
 							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{$item.count} {numeral number=$item.count ends=$item.content.units|default:'шт.,шт.,шт.'}</td>
-							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{if $item.content.oldprice} {$item.content.oldprice|price}{else}&mdash;{/if}</td>
+							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{if $item.oldprice} {$item.oldprice|price}{else}&mdash;{/if}</td>
 							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">
 							    	{if $item.content.discount}{$item.content.discount.human}{else}&mdash;{/if}
 							    </td>
-							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{$item.content.price|price}</td>
-							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{if $item.content.oldprice}{($item.content.oldprice*$item.count)|price}{else}&mdash;{/if}</td>
-							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{($item.content.price*$item.count)|price}</td>
+							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{$item.price|price}</td>
+							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{if $item.oldprice}{($item.oldprice*$item.count)|price}{else}&mdash;{/if}</td>
+							    <td nowrap="nowrap" style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;text-align:right;">{($item.price*$item.count)|price}</td>
 							</tr>
 							{/foreach}
 							{if $order_content.discount}

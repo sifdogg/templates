@@ -29,11 +29,12 @@
 				{include file="$TMPL_FOLDER/inc/counters.html"}
 			</div>		
 			{/if}
-			{if $ext_shopexpresssocialtabs}{include file="$TMPL_FOLDER/mod/ShopExpressSocialTabs.html"}{/if}
 		</div>
 		{if $ext_geolocate}
 			<p align="center">Вы из города {$GeoLocate.city.name_ru}</p>
 		{/if}
+		
+		{if $ext_shopexpresssocialtabs}{include file="$TMPL_FOLDER/mod/ShopExpressSocialTabs.html"}{/if}
 	</div>
 </footer>
 {if $GLOBS.user_id eq 3}{include file="$TMPL_FOLDER/inc/ui-design.html"}{/if}

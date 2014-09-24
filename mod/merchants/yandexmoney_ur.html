@@ -22,7 +22,7 @@
 {assign var=summ value=ceil($summ/$GLOBS.allcurrencies.RUB.course)}
 {/if}
 {if $GLOBS.merchants.yandexmoney_ur['PC']}
-<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form pull-left">
+<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form">
 <input type="hidden" name="cms_name" value="difocus">
 <input name="shopId" value="{$GLOBS.merchants.yandexmoney_ur.uid}" type="hidden"/> 
 <input name="scid" value="{$GLOBS.merchants.yandexmoney_ur.scid}" type="hidden"/>
@@ -42,7 +42,7 @@
 {/if}
 
 {if $GLOBS.merchants.yandexmoney_ur['AC']}
-<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form pull-left">
+<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form">
 <input type="hidden" name="cms_name" value="difocus">
 <input name="shopId" value="{$GLOBS.merchants.yandexmoney_ur.uid}" type="hidden"/> 
 <input name="scid" value="{$GLOBS.merchants.yandexmoney_ur.scid}" type="hidden"/> 
@@ -63,7 +63,7 @@
 
 {if $GLOBS.merchants.yandexmoney_ur['MC']}
 <!-- Со счета мобильного телефона -->
-<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form pull-left">
+<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form">
 <input type="hidden" name="cms_name" value="difocus">
 <input name="shopId" value="{$GLOBS.merchants.yandexmoney_ur.uid}" type="hidden"/> 
 <input name="scid" value="{$GLOBS.merchants.yandexmoney_ur.scid}" type="hidden"/> 
@@ -83,7 +83,7 @@
 {/if}
 {if $GLOBS.merchants.yandexmoney_ur['GP']}
 <!-- Наличными через кассы и терминалы -->
-<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form pull-left">
+<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form">
 <input type="hidden" name="cms_name" value="difocus">
 <input name="shopId" value="{$GLOBS.merchants.yandexmoney_ur.uid}" type="hidden"/> 
 <input name="scid" value="{$GLOBS.merchants.yandexmoney_ur.scid}" type="hidden"/> 
@@ -103,7 +103,7 @@
 {/if}
 {if $GLOBS.merchants.yandexmoney_ur['WM']}
 <!-- Из кошелька в системе WebMoney -->
-<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form pull-left">
+<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form">
 <input type="hidden" name="cms_name" value="difocus">
 <input name="shopId" value="{$GLOBS.merchants.yandexmoney_ur.uid}" type="hidden"/> 
 <input name="scid" value="{$GLOBS.merchants.yandexmoney_ur.scid}" type="hidden"/> 
@@ -123,7 +123,7 @@
 {/if}
 {if $GLOBS.merchants.yandexmoney_ur['SB']}
 <!-- Через Сбербанк Онлайн -->
-<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form pull-left">
+<form action="https://{if $GLOBS.merchants.yandexmoney_ur['test'] eq 'true'}demomoney{else}money{/if}.yandex.ru/eshop.xml" method="post" class="payment-form">
 <input type="hidden" name="cms_name" value="difocus">
 <input name="shopId" value="{$GLOBS.merchants.yandexmoney_ur.uid}" type="hidden"/> 
 <input name="scid" value="{$GLOBS.merchants.yandexmoney_ur.scid}" type="hidden"/> 
