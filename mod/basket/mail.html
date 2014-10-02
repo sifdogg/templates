@@ -161,7 +161,7 @@
 							{if $order_content.fio}
 							<tr bgcolor="{cycle values="#ffffff,#f5f5f5"}">
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
-									{$order_formfields.name}:
+									{$order_formfields.name|default:'Имя'}:
 								</td>
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
 									{$order_content.fio}
@@ -171,7 +171,7 @@
 							{if $order_content.phone}
 							<tr bgcolor="{cycle values="#ffffff,#f5f5f5"}">
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
-									{$order_formfields.phone}:
+									{$order_formfields.phone|default:'Телефон'}:
 								</td>
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
 									{$order_content.phone}
@@ -181,7 +181,7 @@
 							{if $order_content.email}
 							<tr bgcolor="{cycle values="#ffffff,#f5f5f5"}">
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
-									{$order_formfields.email}:
+									{$order_formfields.email|default:'Электронная почта'}:
 								</td>
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
 									{$order_content.email}
@@ -198,10 +198,30 @@
 								</td>
 							</tr>
 							{/if}
+							{if $order_content.status}
+							<tr bgcolor="#ffffff">
+								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
+									Статус заказа:
+								</td>
+								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
+									{$GLOBS.order_status[$order_content.status]}
+								</td>
+							</tr>
+							{/if}
+							{if $order_content.pay_status}
+							<tr bgcolor="#f5f5f5">
+								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
+									Статус оплаты:
+								</td>
+								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
+									{$GLOBS.pay_status[$order_content.pay_status]}
+								</td>
+							</tr>
+							{/if}
 							{if $order_content.address}
 							<tr bgcolor="{cycle values="#ffffff,#f5f5f5"}">
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
-									{$order_formfields.address}:
+									{$order_formfields.address|default:'Адрес'}:
 								</td>
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
 									{$order_content.address}
@@ -211,7 +231,7 @@
 							{if $order_content.comment}
 							<tr bgcolor="{cycle values="#ffffff,#f5f5f5"}">
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
-									{$order_formfields.comment}:
+									{$order_formfields.comment|default:'Комментарий'}:
 								</td>
 								<td style="border-collapse: collapse;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;font-size:14px;font-family: 'trebuchet ms', geneva;">
 									{$order_content.comment}
