@@ -58,6 +58,15 @@
 
 {if $GLOBS.YACOUNTER && $GLOBS.YACOUNTER|strpos:'Например' !== 0}
 <script type="text/javascript">
+{if $order_id && !$order_show}
+var yaParams = {
+	order_id: "{$order_id}",
+	order_price: {$order_total|replace:',':'.'}, 
+	currency: "{$GLOBS.currency.code}",
+	exchange_rate: 1
+};
+{foreach from=$basketdata item=item name="orderitems"}yaParams.push( { id: "{$item.oid}", name: "{$item.content.name}", price: {$item.content.price|replace:',':'.'}, quantity: {$item.count} } );{/foreach}	
+{/if}
 $(function (){
 	$('a.inbasket').on('click', function(){
 		try { yaCounter{$GLOBS.YACOUNTER}.reachGoal('ProductPutFromCatalog'); }
@@ -89,7 +98,8 @@ $(function (){
                     clickmap:true,
                     trackLinks:true,
                     accurateTrackBounce:true,
-                    trackHash:true } );
+                    trackHash:true,
+                    params:window.yaParams || { } } );
         } catch(e) { }
     });
 
