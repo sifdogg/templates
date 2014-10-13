@@ -3,7 +3,7 @@
 		{if $content.product_flags}<span class="badge badge-warning left">{if $GLOBS.product_flags[$content.product_flags]}{$GLOBS.product_flags[$content.product_flags]}{else}{$content.product_flags}{/if}</span>{/if}
 		{if $content.discount.percent}<span class="btn btn-success product-circle right">-{$content.discount.percent}%</span>{/if}
 		{if $content.discount.money}<span class="btn btn-success product-circle right">-{$content.discount.money|price}</span>{/if}
-		<a href="{$item.vlink}">{if sizeof($content.images)>0}{foreach from=$content.images item="im"}<img data-original="/{image src=$im.path height=$GLOBS.img_height|default:150 folder=$GLOBS.img_height|default:"150" crop=true}" height="{$GLOBS.img_height|default:150}" alt="{$im.name}" />{break}{/foreach}{else}<img data-original="/media0/img/no-image.png" alt="Нет изображения" />{/if}</a>
+		<a href="{$item.vlink}">{if sizeof($content.images)>0}{foreach from=$content.images item="im"}<img data-original="/{image src=$im.path height=$GLOBS.img_height|default:150 folder=$GLOBS.img_height|default:"150"}" height="{$GLOBS.img_height|default:150}" alt="{$im.name}" />{break}{/foreach}{else}<img data-original="/media0/img/no-image.png" alt="Нет изображения" />{/if}</a>
 		
 		<div class="caption">
 			<h5><a href="{$item.vlink}">{$content.name}</a>

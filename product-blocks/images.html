@@ -10,7 +10,7 @@
 <div class="thumbnails row-fluid">
 {foreach from=$images item="im" name='itemcounter'}
 	<a href="{if $watermark[0].path}{watermark src=$im.path watermark=$watermark[0].path}{else}{$im.path}{/if}" class="thumbnail span3 fancybox" title="{$im.name}" data-image="/{image src=$im.path width=400 folder=".400"}" data-zoom-image="{$im.path}" rel="group">
-		<img src="/{image src=$im.path width=150 height=150 folder=".150" crop=true}" alt="{$im.name}">
+		<img src="/{image src=$im.path width=150 height=150 folder=".150x150" crop=true}" alt="{$im.name}">
 		<center class="hide">{$im.name}</center>
 	</a>
 {if $smarty.foreach.itemcounter.iteration % 4 == 0}</div><br /><div class="thumbnails row-fluid">{/if}
