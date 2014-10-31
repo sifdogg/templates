@@ -153,7 +153,7 @@
 {if $ext_socialposting}
 <div class="alert alert-info">
 {if $socialposting_name}<h5>{$socialposting_name}</h5>{/if}
-<a class="social-32-vkontakte" href="http://vk.com/share.php?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку во ВКонтакте" onclick="window.open(this.href, 'Опубликовать ссылку во Вконтакте', 'width=636,height=300'); return false"></a>
+<a class="social-32-vkontakte" href="http://vk.com/share.php?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}&title={$title|escape}&description={$annotate|escape}&image=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$images[0].path|urlencode}&noparse=false" title="Опубликовать ссылку во ВКонтакте" onclick="window.open(this.href, 'Опубликовать ссылку во Вконтакте', 'width=636,height=300'); return false"></a>
 <a class="social-32-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Facebook" onclick="window.open(this.href, 'Опубликовать ссылку в Facebook', 'width=640,height=436,toolbar=0,status=0'); return false"></a>
 <a class="social-32-google" href="https://plus.google.com/share?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Google Plus" onclick="window.open(this.href, 'Опубликовать ссылку в Google Plus', 'width=800,height=300'); return false"></a>
 <a class="social-32-twitter" href="http://twitter.com/intent/tweet?text={$name|urlencode}+http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Twitter" onclick="window.open(this.href, 'Опубликовать ссылку в Twitter', 'width=490,height=400'); return false" target="_blank"></a>
