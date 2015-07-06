@@ -20,6 +20,10 @@
     {/if}
     {/foreach}
 
+	{if $directories_paging>1}
+	{if $directories_paging-1 eq $directories_current+1}<link rel="next" href="?page={$directories_current+1}">{/if}
+	{if $directories_current!=0}<link rel="prev" href="?page={$directories_current-1}">{/if}
+	{/if}
 	
     {if $meta_description}<meta name="description" content="{$meta_description}">{/if}
     {if $meta_keywords}<meta name="keywords" content="{$meta_keywords}">{/if}

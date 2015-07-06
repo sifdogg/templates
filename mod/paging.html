@@ -8,7 +8,7 @@
 	{if $smarty.section.paging.index==$page}
 	<li class="active"><a href="#">{$smarty.section.paging.index+1}</a></li>
 	{else}
-	<li><a href="?{$pagekey}={$smarty.section.paging.index}{if $directories_order_pubs}&orderby={$directories_order_pubs}{/if}{if $directories_filters_query_url}&{$directories_filters_query_url}{/if}{if $tags_word}&value={$tags_word}{/if}{if $searchquery}&q={$searchquery}{/if}">{$smarty.section.paging.index+1}</a></li>
+	<li>{if $smarty.section.paging.index!=0}<a href="?{$pagekey}={$smarty.section.paging.index}{if $directories_order_pubs}&orderby={$directories_order_pubs}{/if}{if $directories_filters_query_url}&{$directories_filters_query_url}{/if}{if $tags_word}&value={$tags_word}{/if}{if $searchquery}&q={$searchquery}{/if}">{$smarty.section.paging.index+1}</a>{else}<a href=".">{$smarty.section.paging.index+1}</a>{/if}</li>
 	{/if}
 	{else}
 	{/if}

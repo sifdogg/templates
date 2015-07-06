@@ -5,7 +5,10 @@
 			{if $GLOBS.PHONES}<small>{$GLOBS.PHONES}</small>{/if}
 			{if $GLOBS.MAIL}<a href="mailto:{$GLOBS.MAIL}">{$GLOBS.MAIL}</a>{/if}
 		</p>
-		<div class="brand"><a href="/">{$GLOBS.SITENAME}</a><small>{$GLOBS.SITEDESCRIPTION}</small></div>
+		<div class="brand">
+			{if is_array($GLOBS.LOGO)}<a href="/"><img src="{$GLOBS.LOGO[0].path}" alt="{$GLOBS.LOGO[0].alt}"><small>{$GLOBS.SITEDESCRIPTION}</small></a>{else}<a href="/">{$GLOBS.SITENAME}</a><small>{$GLOBS.SITEDESCRIPTION}</small>{/if}
+		</div>
+
 	</div>
 	{if sizeof($menu)}
 	<nav class="navbar">

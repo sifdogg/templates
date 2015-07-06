@@ -3,14 +3,16 @@
 </a>
 <div class="hide" id="QiwiPayForm{$order_id}">
 <div style="margin:0 auto; padding:5px; width:350px; border:1px solid #ddd; background:#fff; border-radius: 7px; -webkit-border-radius: 7px; -moz-border-radius: 7px; font:normal 14px/14px Geneva,Verdana,Arial,Helvetica,Tahoma,sans-serif;">
-	<form action="http://w.qiwi.ru/setInetBill_utf.do" method="POST" accept-charset="UTF-8">
-	 	{if $GLOBS.currency.code neq 'RUR' && $GLOBS.currency.code neq 'RUB'}{assign var=summ value=ceil($summ/$GLOBS.allcurrencies.RUB.course)}{/if}
+	<form action="https://w.qiwi.com/order/external/create.action" method="POST" accept-charset="UTF-8">
 	 	<!-- {$summ}/{$GLOBS.allcurrencies.RUB.course} -->
-		<input type="hidden" name="from" value="{if $GLOBS.merchants.qiwi.shop_id}{$GLOBS.merchants.qiwi.shop_id}{else}{$GLOBS.merchants.qiwi.id}{/if}"/>
+		<input type="hidden" name="from" value="{$GLOBS.merchants.qiwi.shop_id}"/>
 		<input type="hidden" name="lifetime" value="1080.0"/>
-		<input type="hidden" name="check_agt" value="{$GLOBS.merchants.qiwi.check_agt}"/>
     	<input type="hidden" name="txn_id" value="{$order_id}"/>
-    	<input type="hidden" name="amount_rub" value="{$summ|price:false:false}" />
+    	<input type="hidden" name="summ" value="{$summ|price:false:false}" />
+    	<input type="hidden" name="currency" value="{$GLOBS.currency.code|replace:'RUR':'RUB'}" />
+    	<input type="hidden" name="successUrl" value="http://{$GLOBS.SITE_HOST}/basket/?{$order_id}%7C{$order_hash}" />
+    	<input type="hidden" name="failUrl" value="http://{$GLOBS.SITE_HOST}/basket/?{$order_id}%7C{$order_hash}" />
+
 		<p style="text-align:center; color:#006699; padding:20px 0px; background:url(https://ishop.qiwi.ru/img/button/logo_31x50.jpg) no-repeat 10px 50%;">Выставить счёт за покупку</p>
 		<table style="border-collapse:collapse;width:100%;">
 			<tr style="background:#f1f5fa;">

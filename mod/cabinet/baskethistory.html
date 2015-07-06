@@ -62,7 +62,7 @@ var duplicateOrder = function (order_id, order_hash)
 <a name="order_id_{$order_id}"></a>
 <div>
 	<big><b>Заказ №{$order_id}</b></big> от <em>{$order.content.created|date_format:"%d %B %Y"}</em>,
-	на сумму <b>{$order.content.summ|price:false} {numeral number=$order.content.summ ends=$GLOBS.allcurrencies[$order.content.currency].name}</b>{if $order.content.discount}, накопительная скидка <b>{$order.content.discount.human}</b>{/if}{if $order.content.coupon}, купон на скидку <b>{$order.content.coupon.human}</b>{/if}
+	на сумму <b>{$order.content.summ|price:false} {numeral number=$order.content.summ ends=$GLOBS.allcurrencies[$order.content.currency].name}</b>{if $order.content.paid}<small> ({$order.content.paid|price} оплачено)</small>{/if}{if $order.content.discount}, накопительная скидка <b>{$order.content.discount.human}</b>{/if}{if $order.content.coupon}, купон на скидку <b>{$order.content.coupon.human}</b>{/if}
 	{if $GLOBS.order_status[$order.content.status]}
 		<span class="badge
 		{if $order.content.status eq 'A'}{/if}
@@ -89,28 +89,24 @@ var duplicateOrder = function (order_id, order_hash)
 {*  Выбор способа оплаты *}
 {if $GLOBS.merchants && $order.content.pay_status neq 'FP'}
 	{* Способ оплаты выбран, + ссылка скрыть/показать способы оплаты *}
-	{if $order.content.pay_method neq 'NON'}
-	<br />Способ оплаты: {$GLOBS.pay_methods[$order.content.pay_method]}{if $order.content.pay_method eq 'INVOICE'} &mdash; <a href="#invoce-req" class="fancybox">посмотреть реквизиты</a>{/if}. <a href="#" id="change_merchant{$order_id}"><small>Выбрать другой способ оплаты</small>.</a>
-	
-	<script>
-	!function ($) {
-		$(function(){
-			$('#change_merchant{$order_id}').click(function()
-			{
-				if($('#merchants{$order_id}').is(':visible')) $('#merchants{$order_id}').slideUp('fast');
-				else $('#merchants{$order_id}').slideDown('fast');
-			});
-			$('#merchants{$order_id}').hide();
-			return false;
-		});
-	}(window.jQuery);
-	</script>
+	{if $order.content.pay_method neq 'NON' && $order.content.pay_method neq 'POINTS' }
+	<br />Способ оплаты: {$GLOBS.pay_methods[$order.content.pay_method]}{if $order.content.pay_method eq 'INVOICE'} &mdash; <a href="#invoce-req" class="fancybox">посмотреть реквизиты</a>{/if}. <a href="#" id="change_merchant{$order_id}"><small>Выбрать другой способ оплаты</small></a>
+	<script> !function ($) { $(function(){ $('#merchants{$order_id}').hide(); }); }(window.jQuery); </script>
+	{else if $order.content.pay_method eq 'POINTS'}
+	<br />Частично оплачен {$GLOBS.pay_methods[$order.content.pay_method]}. <a href="#" id="change_merchant{$order_id}"><small>Выберите другой способ оплаты, чтобы оплатить остаток</small></a>
+	<script> !function ($) { $(function(){ $('#merchants{$order_id}').hide(); }); }(window.jQuery); </script>	
 	{/if}
-
-	{* Список способов оплаты *}
+	
 	<section id="merchants{$order_id}" style="margin-top:10px;">
 		{include file="$TMPL_FOLDER/mod/merchants/merchant.html" shipping_price=$order.content.delivery_price basketdata=$order.goods summ=$order.content.summ order_id=$order_id currency=$GLOBS.allcurrencies[$order.content.currency] order_content=$order.content}
 	</section>
+	<script>
+	$('#change_merchant{$order_id}').click(function()
+	{
+		if($('#merchants{$order_id}').is(':visible')) $('#merchants{$order_id}').slideUp('fast');
+		else $('#merchants{$order_id}').slideDown('fast');
+	});
+	</script>
 {/if}
 
 {*  Заказ оплачен , отображаем способ оплаты *}
@@ -188,5 +184,8 @@ var duplicateOrder = function (order_id, order_hash)
 {/foreach}
 {include file="$TMPL_FOLDER/mod/paging.html" pagekey="page" pages=$cabinetbaskethistory_paging page=$cabinetbaskethistory_current perpage=$cabinetbaskethistory_perpage total=$cabinetbaskethistory_total}
 {else}
-<p>Пока, вы не сделали ни одного заказа.</p>
+	<div class="well">
+		<h3>Ваша история заказов пуста</h3>
+		<p>К сожалению, вы пока не сделали ни одного заказа, поэтому здесь пусто.</p>
+	</div>
 {/if}

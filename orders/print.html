@@ -102,7 +102,7 @@ hr {
 </table>
 <table class="table noborder">
 	<tr>
-		<td align="left" valign="top">Общее количество {$order.countUnits} шт.</td>
+		<td align="left" valign="top">Общее количество {$order.countUnits} шт.{if $order.weight}, общий вес {$order.weight} г{/if}</td>
 		<td align="right" valign="top"><h2>Итого: {$order.summ|price:false} {numeral number=$order.summ ends=$GLOBS.allcurrencies[$order.currency].name}</h2></td>
 	</tr>
 </table>

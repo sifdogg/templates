@@ -14,7 +14,7 @@
 						{if $order_fields[$item.name]['value']}
 						<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']}" placeholder="{$item.description}" style="width:97%;" />
 						{else}
-						<input type="text" class="datefield" id="input{$item.name|capitalize}" name="{$item.name}" value="{if $GLOBS.userdata[$item.name] neq 'guest'}{$GLOBS.userdata[$item.name]}{/if}" placeholder="{$item.description}" style="width:97%;" data-date-format="dd.mm.yyyy" data-date="01.01.2014" />
+						<input type="text" class="datefield" id="input{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']|default:$GLOBS.userdata[$item.name]}" placeholder="{$item.description}" style="width:97%;" data-date-format="dd.mm.yyyy" data-date="01.01.2014" />
 						{/if}
 						{if $order_fields[$item.name]['error']} <span class="help-inline">Обязательно для заполнения</span>{/if}
 					</div>
@@ -49,12 +49,13 @@
 				<!--[if lt IE 10]>
 				<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
 				<![endif]-->
-				<script type="text/javascript" src="https://dadata.ru/static/js/jquery.suggestions-4.3.min.js"></script>
+				<script type="text/javascript" src="https://dadata.ru/static/js/lib/jquery.suggestions-4.8.min.js"></script>
 				<script type="text/javascript">
-				    $("#input{$item.name|capitalize}").suggestions({
-				        serviceUrl: "https://dadata.ru/api/v2/suggest/address",
+				    $("#{$item.htmltype}{$item.name|capitalize}").suggestions({
+				        serviceUrl: "https://dadata.ru/api/v2",
 				        type: "ADDRESS",
 				        token: "b94c274fc11fbd3fa9f26c57047e57d0287ab91f",
+				        geoLocation: true,
 				        onSelect: function(suggestion)
 				        {
 				            $('#hiddenPostindex').val(suggestion.data.postal_code).change();
@@ -136,13 +137,13 @@
 				<div class="control-group">
 					<label class="control-label" for="inputName">Имя</label>
 					<div class="controls">
-						<input type="text" id="inputName" name="name" value="{if $GLOBS.userdata.name neq 'guest'}{$GLOBS.userdata.name}{/if}">
+						<input type="text" id="inputName" name="name" value="{$order_fields['name']['value']|default:$GLOBS.userdata.name}">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="inputEmail">Электронная почта</label>
 					<div class="controls">
-						<input type="text" id="inputEmail" name="email" value="{$GLOBS.userdata.email}">
+						<input type="text" id="inputEmail" name="email" value="{$order_fields['email']['value']|default:$GLOBS.userdata.name}">
 					</div>
 				</div>
 			</div>
@@ -150,7 +151,7 @@
 				<div class="control-group">
 					<label class="control-label" for="inputPhone">Номер телефона</label>
 					<div class="controls">
-						<input type="text" id="inputPhone" name="phone" value="{$GLOBS.userdata.phone}">
+						<input type="text" id="inputPhone" name="phone" value="{$order_fields['phone']['value']|default:$GLOBS.userdata.phone}">
 					</div>
 				</div>
 				{if sizeof($delivery)>0}
