@@ -90,7 +90,7 @@ $(document).ready(function()
   <div class="form-actions">
   	<input type="hidden" name="antispam" value="" />
   	<input type="hidden" name="from" value="{$order_from}" />
-    <button type="submit" value="1" class="btn btn-primary">Отправить форму</button>
+    <button type="submit" value="1" class="btn btn-primary">{$button|default:'Отправить форму'}</button>
     <button class="btn" type="reset">Очистить</button>
   </div>
 </fieldset>
