@@ -19,12 +19,16 @@
 			{include file="$TMPL_FOLDER/mod/lastcomments.html"}
 		</aside>
 		<section class="content">
+			{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 			{include file="$TMPL_FOLDER/mod/slideshow.html"}
 			{include file="$TMPL_FOLDER/mod/anounces.html"}
 			{include file="$TMPL_FOLDER/mod/objectsconnected.html"}
 			{include file="$TMPL_FOLDER/mod/objectsattached.html"}
+			{include file="$TMPL_FOLDER/mod/productlast.html"}
 			{include file="$TMPL_FOLDER/mod/productpurchased.html"}
 			{include file="$TMPL_FOLDER/mod/productchecked.html"}
+			{include file="$TMPL_FOLDER/mod/productmostpopular.html"}
+			{include file="$TMPL_FOLDER/mod/productmostviewed.html"}
 			{include file="$TMPL_FOLDER/mod/productdiscount.html"}
 			{if $text}<div class="article">{$text}</div>{/if}
 		</section>

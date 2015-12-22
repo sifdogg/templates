@@ -6,7 +6,7 @@
 			data-price="{$price|discount:$discount}"
 			data-discount-percent="{$discount.percent|default:0}"
 			data-discount-money="{$discount.money|default:0}"
-			data-oldprice="{$price}">
+			data-oldprice="{if $discount}{$price}{else if $old_price}{$old_price}{else}{$price}{/if}">
 			{$price|discount:$discount|price:false}
 		</span>
 		
@@ -21,13 +21,7 @@
 	    		{if $discount.money}{$discount.money|price:false} {numeral number=$discount.money|price:false ends=$GLOBS.currency.name}{/if}
 			</span>
 			{if $discount.date_to_days < 30}
-			<div class="coundown" data-date="{$discount.date_to}">
-				<em class="icon-time"></em>
-				<span class=days></span>
-				<span class=hours></span>
-				<span class=minutes></span>
-				<span class=seconds></span>
-			</div>
+			<div class="coundown" data-date="{$discount.date_to}"></div>
 			{/if}
 		</div>
 		

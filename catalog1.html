@@ -17,6 +17,7 @@
 			{include file="$TMPL_FOLDER/mod/lastcomments.html"}
 		</aside>
 		<section class="content">
+			{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 			{include file="$TMPL_FOLDER/mod/anounces.html"}
 			{if $annotate}<p class="lead">{$annotate}</p>{/if}
 	    {if sizeof($directories_pubs)>0}
@@ -40,7 +41,7 @@
 	    	<div class="well">
 	    		<h2>Раздел пуст</h2>
 		    	<p>Текущий раздел, пока не заполнен.</p>
-	    	</div>	    	
+	    	</div>
 	    	{/if}
 	    {/if}
 	    	{if $text}<div class="well">

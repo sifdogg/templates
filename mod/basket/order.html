@@ -12,14 +12,14 @@
 		<article style="margin-top:15px;">
 			<div class="hero-unit">
 				<h1>Номер вашего заказа <u>{$order_id}</u></h1>
-				<p>Сумма вашего заказа составила <b>{$order_total|price:false} {numeral number=$order_total ends=$GLOBS.currency.name}</b>, спасибо, что выбрали наш магазин.</p>
+				<p>Сумма вашего заказа составила <b>{$order_total|price:false} {numeral number=$order_total ends=$GLOBS.currency.name}</b>{if $order_content.discount}, накопительная скидка <b>{$order_content.discount.human}</b>{/if}{if $order_content.coupon}, использован купон на скидку <b>{$order_content.coupon.human}</b>{/if}. Спасибо, что выбрали наш магазин.</p>
 				{$text}
 				{if $GLOBS.user_id neq 6}
-				<p>Историю заказов можно посмотреть в <a href="/cabinet/history.html">личном кабинете</a>.</p>
+				<p class="welcome-unit">Историю заказов можно посмотреть в <a href="/cabinet/history.html">личном кабинете</a>.</p>
 				{else}
-				<p>Вы можете <a href="/cabinet/">зарегистрироваться</a> у нас в магазине и использовать все привилегии наших постоянных клиентов.</p>
+				<p class="welcome-unit">Вы можете <a href="/cabinet/">зарегистрироваться</a> у нас в магазине и использовать все привилегии наших постоянных клиентов.</p>
 				{/if}
-				<p class="pull-right"><a href="/basket/?action=showorder&id={$order_id}&oh={$order_hash}"><small>Постоянный адрес заказа №{$order_id}</small></a></p>
+				<p class="pull-right"><a href="/basket/?{$order_id}%7C{$order_hash}"><small>Постоянный адрес заказа №{$order_id}</small></a></p>
 			</div>
 
 			{if $GLOBS.merchants && $order_content.pay_status neq 'FP' && $order_content.pay_method eq 'NON'}
@@ -64,6 +64,7 @@
 						{if $order_content.status eq 'N'}badge-info{/if}
 						{if $order_content.status eq 'P'}badge-info{/if}
 						{if $order_content.status eq 'M'}badge-success{/if}
+						{if $order_content.status eq 'S'}badge-success{/if}
 						{if $order_content.status eq 'O'}badge-info{/if}
 						{if $order_content.status eq 'C'}badge-success{/if}
 						{if $order_content.status eq 'V'}badge-info{/if}
@@ -80,14 +81,22 @@
 				{foreach from=$basketdata item=item name="orderitems"}
 				<div class="product-item span3">
 				  <div class="product-item-inner thumbnail">
-				    <a href="{$item.vlink}">{if sizeof($item.content.images)>0}{foreach from=$item.content.images item="im"}<img src="/{image src=$im.path height=150 folder=".150"}" alt="{$im.name}" />{break}{/foreach}{else}<img src="/media0/img/no-image.png" alt="Нет изображения" height=130 />{/if}</a>
+				    <a href="{$item.vlink}">{assign var="im_showed" value=0}{if sizeof($item.content.images)>0}{if sizeof($item.params)>0}{foreach from=$item.params key=key item=value}{foreach from=$item.content.images item="im"}{if $item.content[$key][$value]['name'] eq $im.name}<img src="/{image src=$im.path width=160 folder=".160"}" alt="{$im.name}">{assign var="im_showed" value="1"}{break}{/if}{/foreach}{/foreach}{/if}{if empty($im_showed)}{foreach from=$item.content.images item="im"}<img src="/{image src=$im.path width=160 folder=".160"}" alt="{$im.name}">{break}{/foreach}{/if}{else}<img src="/media0/img/no-image.png" alt="Нет изображения" height=130 />{/if}</a>
 				    <div class="caption">
 					    <h5><a href="{$item.vlink}">{$item.content.name}</a></h5>
 						<p>
-							Цена: {$item.content.price|price}<br />
-							{if $item.content.oldprice!=$item.content.price}<s>Цена: {$item.content.oldprice|price}</s><br />{/if}
-							Всего за <b>{$item.count} шт.</b> &mdash; {($item.content.price*$item.count)|price}
+							Цена: {$item.price|price} {if $item.oldprice!=$item.price}<s>{$item.oldprice|price}</s>{/if}<br />
+							{if $item.discount}Скидка: <b>{$item.discount.human}</b><br />{/if}
+							
+							Всего за <b>{$item.count}  {numeral number=$item.count ends=$item.content.units|default:'шт.,шт.,шт.'}</b> &mdash; {($item.price*$item.count)|price}
 						</p>
+						{if $order_content.pay_status eq 'FP' && $item.content.paid_files}
+						<p>
+						{foreach from=$item.content.paid_files item=paid_file}
+						<a class="btn btn-default" href="?paid_file={$item.oid}|{$paid_file.path}" target="_blank" title="Ссылка будет действовать в течении часа"><i class="icon-download-alt"></i> Скачать &laquo;{$paid_file.name}&raquo;</a>
+						{/foreach}
+						</p>
+						{/if}
 				    </div>
 				  </div>
 				</div>

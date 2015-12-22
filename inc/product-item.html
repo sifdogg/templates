@@ -1,13 +1,19 @@
 <div class="product-item span3 inbasket-item">
 	<div class="product-item-inner thumbnail">
-		{if $content.product_flags}<span class="badge badge-warning left">{$GLOBS.product_flags[$content.product_flags]}</span>{/if}
+		{if $content.product_flags}<span class="badge badge-warning left">{if $GLOBS.product_flags[$content.product_flags]}{$GLOBS.product_flags[$content.product_flags]}{else}{$content.product_flags}{/if}</span>{/if}
 		{if $content.discount.percent}<span class="btn btn-success product-circle right">-{$content.discount.percent}%</span>{/if}
 		{if $content.discount.money}<span class="btn btn-success product-circle right">-{$content.discount.money|price}</span>{/if}
-		<a href="{$item.vlink}">{if sizeof($content.images)>0}{foreach from=$content.images item="im"}<img src="/{image src=$im.path height=$GLOBS.img_height|default:150 folder=$GLOBS.img_height|default:"150" crop=true}" alt="{$im.name}" />{break}{/foreach}{else}<img src="/media0/img/no-image.png" alt="Нет изображения" />{/if}</a>
+		<a href="{$item.vlink}">{if sizeof($content.images)>0}{foreach from=$content.images item="im"}<img data-original="/{image src=$im.path height=$GLOBS.img_height|default:150 folder=$GLOBS.img_height|default:"150"}" height="{$GLOBS.img_height|default:150}" alt="{$im.name}" />{break}{/foreach}{else}<img data-original="/media0/img/no-image.png" alt="Нет изображения" />{/if}</a>
 		
 		<div class="caption">
 			<h5><a href="{$item.vlink}">{$content.name}</a>
+			{if $content.rank}<br />{section name=poprank loop=$content.rank step=1}<i class="star-rating star-rating-on"></i>{/section}{section name=poprank loop=5-$content.rank step=1}<i class="star-rating"></i>{/section}{/if}
+			
 		{if $content.available eq 'no'}<span class="label label-important">Продано</span>{/if}
+
+		{if isset($content.quantity) && $content.quantity <= 0}
+			{if $content.available neq 'no'}<span class="label label-important">Продано</span>{/if}
+		{/if}
 		{*if $content.available eq 'wait'}<span class="label label-warning">Ожидается</span>{/if*}
 		{*if $content.available eq 'never'}<span class="label label-important">Продано</span>{/if*}
 		{*if $content.available eq 'phone'}<span class="label label-info">Уточняйте наличие</span>{/if*}
@@ -35,18 +41,21 @@
 					<small>{if $content.discount}<s>Старая цена {$content.price|price}</s>{else if $content.old_price}<s>Старая цена {$content.old_price|price}</s>{/if}</small>
 				{/if}
 			</p>
-
+			{if isset($content.quantity) && $content.quantity <= 0}
+				<!-- продано, поэтому кнопку нет -->
+			{else}
 			{if $ext_basketextendedhelpers && $basketextendedhelpers_pageBtn}
 			{if $basketextendedhelpers_sectionBtn eq 1}
-			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>
+			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>
 			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-success btn-mini inbasket" rel="nofollow" data-tmpl="fast"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</a>
 			{elseif $basketextendedhelpers_sectionBtn eq 2}
 			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-success btn-mini inbasket" rel="nofollow" data-tmpl="fast"><i class="icon-shopping-cart icon-white"></i> Купить в один клик</a>
 			{else}
-			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>
+			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>
 			{/if}
 			{else}
-			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>
+			<a href="/basket/?action=add&oid={$oid}&time={$smarty.now}" class="btn btn-primary inbasket {if isset($content.quantity) && $content.quantity <= 0}hidden{/if}" rel="nofollow"><i class="icon-shopping-cart icon-white"></i> Купить</a>
+			{/if}
 			{/if}
 
 			{else}

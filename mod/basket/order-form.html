@@ -3,10 +3,23 @@
 	<fieldset>
 		<div class="row-fluid">
 		{if $orderfields}
-			{assign var='fieldscount' value=sizeof($orderfields)}
 			<div class="span6">
 			{foreach from=$orderfields item=item name=fieldscounter}
 				{if $item.editable eq 'true'}
+				{if $item.htmltype eq 'datefield'}
+				{assign var=datepicker value=1}
+				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
+					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<div class="controls">
+						{if $order_fields[$item.name]['value']}
+						<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']}" placeholder="{$item.description}" style="width:97%;" />
+						{else}
+						<input type="text" class="datefield" id="input{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']|default:$GLOBS.userdata[$item.name]}" placeholder="{$item.description}" style="width:97%;" data-date-format="dd.mm.yyyy" data-date="01.01.2014" />
+						{/if}
+						{if $order_fields[$item.name]['error']} <span class="help-inline">Обязательно для заполнения</span>{/if}
+					</div>
+				</div>
+				{/if}
 				{if $item.htmltype eq 'textfield'}
 				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
 					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
@@ -20,10 +33,46 @@
 					</div>
 				</div>
 				{/if}
+				{if $item.htmltype eq 'adresfield'}
+				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
+					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<div class="controls">
+						{if $order_fields[$item.name]['value']}
+						<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']}" placeholder="{$item.description}" style="width:97%;">
+						{else}
+						<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{if $GLOBS.userdata[$item.name] neq 'guest'}{$GLOBS.userdata[$item.name]}{/if}" placeholder="{$item.description}" style="width:97%;">
+						{/if}
+						{if $order_fields[$item.name]['error']} <span class="help-inline">Обязательно для заполнения</span>{/if}
+					</div>
+				</div>
+				<link href="/media0/css/suggestions.css" type="text/css" rel="stylesheet" />
+				<!--[if lt IE 10]>
+				<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+				<![endif]-->
+				<script type="text/javascript" src="https://dadata.ru/static/js/lib/jquery.suggestions-4.8.min.js"></script>
+				<script type="text/javascript">
+				    $("#{$item.htmltype}{$item.name|capitalize}").suggestions({
+				        serviceUrl: "https://dadata.ru/api/v2",
+				        type: "ADDRESS",
+				        token: "b94c274fc11fbd3fa9f26c57047e57d0287ab91f",
+				        geoLocation: true,
+				        onSelect: function(suggestion)
+				        {
+				            $('#hiddenPostindex').val(suggestion.data.postal_code).change();
+				            $('#hiddenCity').val(suggestion.data.city?suggestion.data.city:suggestion.data.region).change();
+				            $('#hiddenRegion').val(suggestion.data.region).change();
+				        }
+				    });
+				</script>
+				{/if}
+				
+				{if $item.htmltype eq 'hidden'}
+				<input type="hidden" id="hidden{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']}" />
+				{/if}
 				
 				{if $item.htmltype eq 'combostore'}
 				<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
-					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<label class="control-label" for="select{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
 					<div class="controls">
 						<select name="{$item.name}" id="select{$item.name|capitalize}" style="width:100%;">
 						{foreach from=$GLOBS[$item.name] item=field_item key=field_item_key}
@@ -55,6 +104,7 @@
 					<label class="control-label" for="select{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
 					<div class="controls">
 						<select name="delivery" id="select{$item.name|capitalize}" style="width:100%;">
+							<option value="">Выберите тип доставки</option>
 							{foreach from=$delivery item=delivery_item key=delivery_key}
 							<option value="{$delivery_key}"
 									{if $GLOBS.delivery[$delivery_item.name]}data-value="{$delivery_item.name}"{/if}
@@ -79,7 +129,7 @@
 				</div>
 				{/if}
 				{/if}
-				{if $smarty.foreach.fieldscounter.iteration%(($fieldscount+$fieldscount%2)/2) == 0 && $smarty.foreach.fieldscounter.iteration!=$smarty.foreach.fieldscounter.last}</div><div class="span6">{/if}
+				{if $smarty.foreach.fieldscounter.iteration%(($orderfieldcount+$orderfieldcount%2)/2) == 0 && $smarty.foreach.fieldscounter.iteration!=$smarty.foreach.fieldscounter.last}</div><div class="span6">{/if}
 			{/foreach}
 			</div>
 		{else}
@@ -87,13 +137,13 @@
 				<div class="control-group">
 					<label class="control-label" for="inputName">Имя</label>
 					<div class="controls">
-						<input type="text" id="inputName" name="name" value="{if $GLOBS.userdata.name neq 'guest'}{$GLOBS.userdata.name}{/if}">
+						<input type="text" id="inputName" name="name" value="{$order_fields['name']['value']|default:$GLOBS.userdata.name}">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="inputEmail">Электронная почта</label>
 					<div class="controls">
-						<input type="text" id="inputEmail" name="email" value="{$GLOBS.userdata.email}">
+						<input type="text" id="inputEmail" name="email" value="{$order_fields['email']['value']|default:$GLOBS.userdata.name}">
 					</div>
 				</div>
 			</div>
@@ -101,7 +151,7 @@
 				<div class="control-group">
 					<label class="control-label" for="inputPhone">Номер телефона</label>
 					<div class="controls">
-						<input type="text" id="inputPhone" name="phone" value="{$GLOBS.userdata.phone}">
+						<input type="text" id="inputPhone" name="phone" value="{$order_fields['phone']['value']|default:$GLOBS.userdata.phone}">
 					</div>
 				</div>
 				{if sizeof($delivery)>0}
@@ -126,12 +176,17 @@
 			{/if}
 		</div>
 	  	<input type="hidden" name="antispam" value="{$smarty.now}" />
+	  	<input type="hidden" name="index1" value="{$postindex}" />
+
 	</fieldset>
 		<div class="form-actions">
-
 			{if $orderwelcome}<span class="help-inline">{$orderwelcome}</span>{/if}
-			<button type="submit" class="btn btn-primary">Подтвердить заказ</button>
+			<button type="submit" class="btn btn-success">Подтвердить заказ</button>
 		</div>
-
 	<script>$(document).ready(function(){ $("input[name*=antispam]").val('{$antispam}'); });</script>
 </form>
+{if $datepicker}
+<link rel="stylesheet" type="text/css" href="/media0/css/datepicker.css" media="screen" />
+<script type="text/javascript" src="/media0/js/bootstrap-datepicker.js"></script>
+<script>$(document).ready(function(){ $('.datefield').datepicker(); });</script>
+{/if}

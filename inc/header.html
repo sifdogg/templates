@@ -20,6 +20,10 @@
     {/if}
     {/foreach}
 
+	{if $directories_paging>1}
+	{if $directories_paging-1 eq $directories_current+1}<link rel="next" href="?page={$directories_current+1}">{/if}
+	{if $directories_current!=0}<link rel="prev" href="?page={$directories_current-1}">{/if}
+	{/if}
 	
     {if $meta_description}<meta name="description" content="{$meta_description}">{/if}
     {if $meta_keywords}<meta name="keywords" content="{$meta_keywords}">{/if}
@@ -50,10 +54,10 @@
     {/if}
     {/if}
 
-    <link href="/media0/css/jquery.basket.css" rel="stylesheet">
-    <link href="/media0/css/jquery.fancybox.css" rel="stylesheet">
-    <link href="/media0/css/jquery.comments.css" rel="stylesheet">
-	
+    <link href="/media0/css/jquery.basket.css" type="text/css" rel="stylesheet">
+    <link href="/media0/css/jquery.fancybox.css" type="text/css" rel="stylesheet">
+    <link href="/media0/css/jquery.comments.css" type="text/css" rel="stylesheet">
+	<link href="/media0/css/jquery.rating.css" type="text/css" rel="stylesheet" />
     {if !$GLOBS.css && !$GLOBS.style}
     	<link href="/media0/css/bootstrap.min.css" rel="stylesheet" id="MainStyleCSS">
     	<link href="/media0/css/bootstrap-responsive.min.css" rel="stylesheet">

@@ -5,7 +5,10 @@
 			{if $GLOBS.PHONES}<small>{$GLOBS.PHONES}</small>{/if}
 			{if $GLOBS.MAIL}<a href="mailto:{$GLOBS.MAIL}">{$GLOBS.MAIL}</a>{/if}
 		</p>
-		<div class="brand"><a href="/">{$GLOBS.SITENAME}</a><small>{$GLOBS.SITEDESCRIPTION}</small></div>
+		<div class="brand">
+			{if is_array($GLOBS.LOGO)}<a href="/"><img src="{$GLOBS.LOGO[0].path}" alt="{$GLOBS.LOGO[0].alt}"><small>{$GLOBS.SITEDESCRIPTION}</small></a>{else}<a href="/">{$GLOBS.SITENAME}</a><small>{$GLOBS.SITEDESCRIPTION}</small>{/if}
+		</div>
+
 	</div>
 	{if sizeof($menu)}
 	<nav class="navbar">
@@ -22,10 +25,10 @@
 		</div>
 	</nav>
 	{/if}
-	{if $ext_livesearch}	
+	{if $ext_livesearch}
 	<form class="form-search" method="get" action="/search/">
 		<div class="input-append">
-			<input type="text" class="input-medium search-query" name="q" value="{$searchquery}" placeholder="Поиск по сайту" x-webkit-speech speech >
+			<input type="text" class="input-medium search-query" name="q" value="{$searchquery}" placeholder="Поиск по сайту" />
 			<button type="submit" class="btn"><em class="icon-search"></em></button>
 		</div>
 	</form>

@@ -11,9 +11,9 @@
 				<select name="params[{$oid}][{$name}]" style="width:80%;" class="input-xlarge" id="selectParams_{$name}">
 				{foreach from=$field.values item=item key=key}
 				{if $item.editable eq 'true'}
-				<option value="{$key}" data-price="{$item.price|discount:$discount}" data-oldprice="{$item.price}" data-type="{$item.type}" data-name="{$item.name}">
+				<option value="{$key}" data-price="{$item.price|discount:$discount}" data-oldprice="{$item.price}" data-type="{$item.type}" data-name="{$item.name}" {if $smarty.get.$name eq $item.name}selected{/if}>
 					{$item.name}
-				
+					
 					{if $item.price && $item.type eq 'plus'},
 					дополнительно {$item.price|discount:$discount|price:false} {numeral number=$item.price|discount:$discount|price:false ends=$GLOBS.currency.name}
 					{elseif $item.price}
@@ -46,30 +46,53 @@
 		    var $elevate = $('#mimage').data('elevateZoom');
 
 			var params_images = [];
-			$(".inbasket select").change(function()
+			$('.thumbnails a.thumbnail').each(function()
 			{
-				var param_name = $(this).children(":selected").data('name');
-				
-				if(params_images.length == 0)
-				$('.thumbnails a.thumbnail').each(function()
-				{
-					if($(this).children('img').attr('alt'))
-						params_images.push({
-							'name' : $(this).children('img').attr('alt'),
-							'image' : $(this).data('image'),
-							'zoom-image' : $(this).data('zoom-image')
-						});
-				});
-
+				if($(this).children('img').attr('alt'))
+					params_images.push({
+						'name' : $(this).children('img').attr('alt'),
+						'image' : $(this).data('image'),
+						'zoom-image' : $(this).data('zoom-image')
+					});
+			});
+			var SelectImage = function(param_name)
+			{
 				for(var i=0;i<params_images.length;i++)
 				{
 					if( params_images[i]['name'] == param_name )
 					{
 						$elevate.zoomImagePre = params_images[i]['zoom-image'];
 						$elevate.swaptheimage(params_images[i]['image'], $elevate.zoomImagePre);
+						break;
 					}
 				}
+			};
+			$(".inbasket select").change(function()
+			{
+				var param_name = $(this).children(":selected").data('name');
+				SelectImage(param_name);
 			});
+			$(".inbasket select option:selected").each(function()
+			{
+				var param_name = $(this).data('name');
+				SelectImage(param_name);
+			});
+{*
+			if(window.location.search)
+			{
+				var params = decodeURI(window.location.search);
+				params = params.split('?');
+				params = params.slice(1);
+				params = params[0].split('&');
+				
+				for( index in params)
+				{
+					var param = params[index].split('=');
+					//$('#selectParams_' + param[0]).find('option:contains("'+param[1]+'")').attr("selected",true).change();
+					SelectImage(param[1]);
+				}
+			}
+*}
 		});
 	</script>
 	
@@ -88,6 +111,9 @@
 	<input type="hidden" name="time" value="{$smarty.now}" />
 
 	{if $price}
+	{if isset($quantity) && $quantity <= 0}
+		<span class="label label-important">Продано</span>
+	{else}
 	{if $ext_basketextendedhelpers && $basketextendedhelpers_pageBtn}
 	{if $basketextendedhelpers_pageBtn eq 1}
 	<button type="submit" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i> В корзину</button> или 
@@ -99,7 +125,9 @@
 	<button type="submit" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i> Купить</button>
 	{/if}
 	{/if}
-
+	
+	{/if}
+	
 	{if $ext_productscompared || $ext_bookmarked && $GLOBS.user_id neq 6}&nbsp;&mdash;<ul class="bookmark-list-unstyled">{/if}
 	
 	{if $ext_bookmarked && $GLOBS.user_id neq 6}
@@ -123,15 +151,4 @@
 	
 </form>
 {if $ext_socialposting}
-<div class="alert alert-info">
-{if $socialposting_name}<h5>{$socialposting_name}</h5>{/if}
-<a class="social-32-vkontakte" href="http://vk.com/share.php?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку во ВКонтакте" onclick="window.open(this.href, 'Опубликовать ссылку во Вконтакте', 'width=636,height=300'); return false"></a>
-<a class="social-32-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Facebook" onclick="window.open(this.href, 'Опубликовать ссылку в Facebook', 'width=640,height=436,toolbar=0,status=0'); return false"></a>
-<a class="social-32-google" href="https://plus.google.com/share?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Google Plus" onclick="window.open(this.href, 'Опубликовать ссылку в Google Plus', 'width=800,height=300'); return false"></a>
-<a class="social-32-twitter" href="http://twitter.com/intent/tweet?text={$name|urlencode}+http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Twitter" onclick="window.open(this.href, 'Опубликовать ссылку в Twitter', 'width=490,height=400'); return false" target="_blank"></a>
-<a class="social-32-mailru" href="http://connect.mail.ru/share?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}&title={$name|urlencode}" title="Поделиться в Мой Мир" onclick="window.open(this.href, 'Опубликовать ссылку в Мой Мир', 'width=636,height=300'); return false" target="_blank"></a>
-<a class="social-32-yandex" href="http://my.ya.ru/posts_add_link.xml?title={$name|urlencode}&URL=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Я.ру" onclick="window.open(this.href, 'Опубликовать ссылку в Я.ру', 'width=1024,height=768'); return false" target="_blank"></a>
-<a class="social-32-lj" href="http://www.livejournal.com/update.bml?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}&subject={$name|urlencode}&event={$annotate|urlencode}" title="Поделиться в Livejournal" onclick="window.open(this.href, 'Поделиться в Livejournal', 'width=1024,height=768'); return false" target="_blank"></a>
-<a class="social-32-odnoklassniki" href="http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}"  title="Опубликовать ссылку в Одноклассниках" onclick="window.open(this.href, 'Опубликовать ссылку  в Одноклассниках', 'width=800,height=300'); return false" target="_blank"></a>
-</div>
-{/if}
+<div class="alert alert-info">{if $socialposting_name}<h5>{$socialposting_name}</h5>{/if}<a class="social-32-vkontakte" href="http://vk.com/share.php?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}&title={$title|escape}&description={$annotate|escape}&image=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$images[0].path|urlencode}&noparse=false" title="Опубликовать ссылку во ВКонтакте" onclick="window.open(this.href, 'Опубликовать ссылку во Вконтакте', 'width=636,height=300'); return false"></a><a class="social-32-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Facebook" onclick="window.open(this.href, 'Опубликовать ссылку в Facebook', 'width=640,height=436,toolbar=0,status=0'); return false"></a><a class="social-32-google" href="https://plus.google.com/share?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Google Plus" onclick="window.open(this.href, 'Опубликовать ссылку в Google Plus', 'width=800,height=300'); return false"></a><a class="social-32-twitter" href="http://twitter.com/intent/tweet?text={$name|urlencode}+http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Twitter" onclick="window.open(this.href, 'Опубликовать ссылку в Twitter', 'width=490,height=400'); return false" target="_blank"></a><a class="social-32-mailru" href="http://connect.mail.ru/share?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}&title={$name|urlencode}" title="Поделиться в Мой Мир" onclick="window.open(this.href, 'Опубликовать ссылку в Мой Мир', 'width=636,height=300'); return false" target="_blank"></a><a class="social-32-yandex" href="http://my.ya.ru/posts_add_link.xml?title={$name|urlencode}&URL=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}" title="Опубликовать ссылку в Я.ру" onclick="window.open(this.href, 'Опубликовать ссылку в Я.ру', 'width=1024,height=768'); return false" target="_blank"></a><a class="social-32-lj" href="http://www.livejournal.com/update.bml?url=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}&subject={$name|urlencode}&event={$annotate|urlencode}" title="Поделиться в Livejournal" onclick="window.open(this.href, 'Поделиться в Livejournal', 'width=1024,height=768'); return false" target="_blank"></a><a class="social-32-odnoklassniki" href="http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl=http%3A%2F%2F{$smarty.server.HTTP_HOST|urlencode}{$vpath|urlencode}"  title="Опубликовать ссылку в Одноклассниках" onclick="window.open(this.href, 'Опубликовать ссылку  в Одноклассниках', 'width=800,height=300'); return false" target="_blank"></a></div>{/if}

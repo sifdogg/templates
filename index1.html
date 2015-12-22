@@ -12,13 +12,17 @@
 				{if $annotate}<div class="article"><p class="lead">{$annotate}</p></div>{/if}
 			</div>
 			<section>
+				{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 				{include file="$TMPL_FOLDER/mod/slideshow.html"}
 				{include file="$TMPL_FOLDER/mod/anounces.html"}
 				{include file="$TMPL_FOLDER/inc/topbar.html"}
 				{include file="$TMPL_FOLDER/mod/objectsconnected.html"}
 				{include file="$TMPL_FOLDER/mod/objectsattached.html"}
+				{include file="$TMPL_FOLDER/mod/productlast.html"}
 				{include file="$TMPL_FOLDER/mod/productpurchased.html"}
 				{include file="$TMPL_FOLDER/mod/productchecked.html"}
+				{include file="$TMPL_FOLDER/mod/productmostpopular.html"}
+				{include file="$TMPL_FOLDER/mod/productmostviewed.html"}
 				{include file="$TMPL_FOLDER/mod/productdiscount.html"}
 				{include file="$TMPL_FOLDER/mod/newsline.html"}
 				{include file="$TMPL_FOLDER/mod/lastpublish.html"}

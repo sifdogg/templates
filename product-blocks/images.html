@@ -1,7 +1,7 @@
 {if sizeof($images)>0}
 <div class="thumbnails">
 	<a class="thumbnail span12">
-		<img src="/{image src=$images[0].path width=400 folder=".400"}" data-zoom-image="{$images[0].path}" id="mimage" />
+		{foreach from=$images item="im"}<img src="/{image src=$im.path width=400 folder=".400"}" data-zoom-image="{if $watermark[0].path}{watermark src=$im.path watermark=$watermark[0].path}{else}{$im.path}{/if}" id="mimage" />{break}{/foreach}
 	</a>
 </div>
 {/if}
@@ -9,8 +9,8 @@
 <hr />
 <div class="thumbnails row-fluid">
 {foreach from=$images item="im" name='itemcounter'}
-	<a href="{$im.path}" class="thumbnail span3 fancybox" title="{$im.name}" data-image="/{image src=$im.path width=400 folder=".400"}" data-zoom-image="{$im.path}" rel="group">
-		<img src="/{image src=$im.path width=100 height=100 folder=".100" crop=true align=center}" alt="{$im.name}">
+	<a href="{if $watermark[0].path}{watermark src=$im.path watermark=$watermark[0].path}{else}{$im.path}{/if}" class="thumbnail span3 fancybox" title="{$im.name}" data-image="/{image src=$im.path width=400 folder=".400"}" data-zoom-image="{$im.path}" rel="group">
+		<img src="/{image src=$im.path width=150 height=150 folder=".150x150" crop=true}" alt="{$im.name}">
 		<center class="hide">{$im.name}</center>
 	</a>
 {if $smarty.foreach.itemcounter.iteration % 4 == 0}</div><br /><div class="thumbnails row-fluid">{/if}

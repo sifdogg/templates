@@ -1,8 +1,19 @@
+{if $basket_notify}
+<div class="alert alert-info">
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
+    <p class="basket-item inbasket-item"><b>Извините</b><br>
+    В данный момент выбранного товара нет в достаточном количестве:</p>
+    <b>{$basket_notify.name} ({$basket_notify_count} {numeral number=$basket_notify_count ends=$basket_notify.units|default:'шт.,шт.,шт.'})</b>
+    {if sizeof($basket_notify_params)>0}
+    {foreach from=$basket_notify_params key=key item=value}<br />&mdash; {$GLOBS.fieldnames[7][$key]}: {$basket_notify[$key][$value]['name']} {/foreach}
+    {/if}
+</div>
+{/if}
 {if sizeof($basketdata)>0}
 {* вывод сразу всех накопительных скидок *}
 <script>
-var totalUserSpent = {$GLOBS.userdata.totalUserSpent|default:0};
-var totalUserCount = {$GLOBS.userdata.totalUserCount|default:0};
+var totalUserSpent = {$totalUserSpent|default:0};
+var totalUserCount = {$totalUserCount|default:0};
 var moneyRound = {$GLOBS.currency.round|default:0};
 var discounts = [];
 {if sizeof($discounts)}
@@ -11,6 +22,7 @@ var discounts = [];
 </script>
 
 <script>var eShopPostIndex = '{$postindex}';</script>
+<section class="basket-content">
 <table class="table table-striped" style="width:640px;">
 <thead>
   <tr>
@@ -43,6 +55,7 @@ var discounts = [];
     </td>
     
     <td nowrap="nowrap">
+	    <!--input class="count" type="text" name="count" value="{$item.count}" step="1" data-oid="{$item.oid}" data-href="/basket/?action=set" style="width:40px;" /-->
     	<span class="count">
 	    	{$item.count} {numeral number=$item.count ends=$item.content.units|default:'шт.,шт.,шт.'}
     	</span>
@@ -54,6 +67,7 @@ var discounts = [];
 			data-oldprice="{$item.content.oldprice|price:false}"
 			data-price="{$item.content.price|price:false}"
 			data-count="{$item.count}"
+			data-quantity="{$item.content.quantity}"
 			data-units="{$item.content.units|default:'шт.,шт.,шт.'}"
 			data-currency="{$GLOBS.currency.name}"
 			data-discount-percent="{$item.content.discount.percent|default:0}"
@@ -74,7 +88,7 @@ var discounts = [];
 {/foreach}
 </tbody>
 </table>
-
+</section>
 <blockquote class="pull-right">
 	<p>
 		<span id="basketCount">{$count}</span> шт. на сумму: <b><span id="basketTotal">{$total|price:false}</span> {numeral number=$total|price:false ends=$GLOBS.currency.name}</b><br />
@@ -92,7 +106,7 @@ var discounts = [];
 	</p>
 </blockquote>
 <br clear="all" />
-<p align="center"><i><a href="#" onclick="$.fancybox.close();">Продолжить покупки</a> <span class="divider">|</span> <a href="/basket/">Оформить заказ &rarr;</a></i></p>
+<p align="center"><i><a href="#" onclick="$.fancybox.close();">Продолжить покупки</a> <span class="divider">|</span> <a href="/basket/#order-form">Оформить заказ &rarr;</a></i></p>
 {else}
 <p>
 	Пока Вы не выбрали ни одного товара.<br/>

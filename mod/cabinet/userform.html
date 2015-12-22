@@ -3,7 +3,7 @@
 {if $reg_success==1 && $act_success!=1 && $act_success!=2 && !$fog_success}
 	<div class="alert alert-success">
 	<strong>Спасибо за регистрацию</strong><br />
-	<p>Мы выслали письмо с указанными логином ({$register_fields.login.value}) и паролем, на Ваш электронную почту "{$register_fields.email.value}". В данный момент Ваша учетная запись <b>НЕ</b> активирована. Проверьте почту и активируйте учетную запись, пройдя по ссылке указанной в письме.</p>
+	<p>Мы выслали письмо с указанными логином ({$register_fields.login.value}) и паролем, на Вашу электронную почту "{$register_fields.email.value}". В данный момент Ваша учетная запись <b>НЕ</b> активирована. Проверьте почту и активируйте учетную запись, пройдя по ссылке указанной в письме.</p>
 	</div>
 {/if}
 
@@ -107,7 +107,7 @@
 					</div>
 				</div>
 				{/if}
-				{if $GLOBS.userdata.discount}<span class="help-inline" style="line-height:22px;">Скидка <b>{$GLOBS.userdata.discount}%</b></span>{/if}
+				{if $GLOBS.userdata.discount}<span class="help-inline" style="line-height:22px;">Скидка <b>{$GLOBS.userdata.discount.human}</b></span>{/if}
 				<p class="help-block">Ваша активность на сайте определяется количеством комментариев, статей и покупок. Чем выше Ваш уровень активности, тем выше скидка, которую вы получите при покупке. </p>
             </div>
           </div>
@@ -181,6 +181,43 @@
 					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
 					<div class="controls">
 						<input type="text" id="input{$item.name|capitalize}" class="input-xlarge" name="{$item.fieldname}" value="{$item.value}">
+						{if $item.error}<span class="help-inline">{$reg_errors[$item.checked]}</span>{/if}
+			            {if $item.description}<p class="help-block">{$item.description}</p>{/if}
+					</div>
+				</div>
+				{/if}
+				{if $item.htmltype eq 'adresfield'}
+				<div class="control-group {if $item.error} error{/if}">
+					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<div class="controls">
+						<input type="text" id="input{$item.name|capitalize}" class="input-xlarge" name="{$item.fieldname}" value="{$item.value}">
+						{if $item.error}<span class="help-inline">{$reg_errors[$item.checked]}</span>{/if}
+			            {if $item.description}<p class="help-block">{$item.description}</p>{/if}
+					</div>
+				</div>
+				<link href="https://dadata.ru/static/css/suggestions-4.3.css" type="text/css" rel="stylesheet" />
+				<!--[if lt IE 10]>
+				<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+				<![endif]-->
+				<script type="text/javascript" src="https://dadata.ru/static/js/jquery.suggestions-4.3.min.js"></script>
+				<script type="text/javascript">
+				    $("#input{$item.name|capitalize}").suggestions({
+				        serviceUrl: "https://dadata.ru/api/v2/suggest/address",
+				        type: "ADDRESS",
+						token: "b94c274fc11fbd3fa9f26c57047e57d0287ab91f",
+				        onSelect: function(suggestion) {
+				            if($('#inputPostindex').length)
+				            	$('#inputPostindex').val(suggestion.data.postal_code);
+				        }
+				    });
+				</script>
+				{/if}								
+				{if $item.htmltype eq 'datefield'}
+				{assign var=datepicker value=1}
+				<div class="control-group {if $item.error} error{/if}">
+					<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+					<div class="controls">
+						<input type="text" id="input{$item.name|capitalize}" class="datefield input-xlarge" name="{$item.fieldname}" value="{$item.value}" data-date-format="dd.mm.yyyy" data-date="01.01.2014">
 						{if $item.error}<span class="help-inline">{$reg_errors[$item.checked]}</span>{/if}
 			            {if $item.description}<p class="help-block">{$item.description}</p>{/if}
 					</div>
@@ -315,7 +352,7 @@
 			          {$GLOBS.userdata.facebook_displayName|default:$GLOBS.userdata.facebook_profileURL}
 		          </p>
 		          <p class="profile">
-			          <i class="social-16-yandex"></i> <a href="{$GLOBS.userdata.facebook_profileURL}" title="Перейти к профилю социальной сети" target="_blank">Facebook</a>
+			          <i class="social-16-facebook"></i> <a href="{$GLOBS.userdata.facebook_profileURL}" title="Перейти к профилю социальной сети" target="_blank">Facebook</a>
 		          </p>
 	          </div>
 
@@ -329,7 +366,7 @@
 			          {$GLOBS.userdata.twitter_displayName|default:$GLOBS.userdata.twitter_profileURL}
 		          </p>
 		          <p class="profile">
-			          <i class="social-16-yandex"></i> <a href="{$GLOBS.userdata.twitter_profileURL}" title="Перейти к профилю социальной сети" target="_blank">Twitter</a>
+			          <i class="social-16-twitter"></i> <a href="{$GLOBS.userdata.twitter_profileURL}" title="Перейти к профилю социальной сети" target="_blank">Twitter</a>
 		          </p>
 	          </div>
 	          {/if}
@@ -400,4 +437,9 @@
           </div>
         </fieldset>
       </form>
+{/if}
+{if $datepicker}
+<link rel="stylesheet" type="text/css" href="/media0/css/datepicker.css" media="screen" />
+<script type="text/javascript" src="/media0/js/bootstrap-datepicker.js"></script>
+<script>$(document).ready(function(){ $('.datefield').datepicker(); });</script>
 {/if}

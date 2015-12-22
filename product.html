@@ -1,3 +1,55 @@
+{if $smarty.get.tmpl eq 'abs'}
+{* для добавления в корзину не открывая сам товар , показывает форму со спецификациями *}
+<form class="inbasket" action="/basket/" method=post align=center>
+	{if sizeof($basketparams_fields)>0}
+	<fieldset>
+		{foreach from=$basketparams_fields item=field key=name}
+		{if $field.values|editable_count}
+		<div class="control-group">
+			<label class="control-label" for="selectParams_{$name}">
+				{$GLOBS.fieldnames[$objinfo.type][$name]}
+			</label>
+			<div class="controls">
+				<select name="params[{$oid}][{$name}]" style="width:80%;" class="input-xlarge" id="selectParams_{$name}">
+				{foreach from=$field.values item=item key=key}
+				{if $item.editable eq 'true'}
+				<option value="{$key}" data-price="{$item.price|discount:$discount}" data-oldprice="{$item.price}" data-type="{$item.type}" data-name="{$item.name}" {if $smarty.get.$name eq $item.name}selected{/if}>
+					{$item.name}
+					
+					{if $item.price && $item.type eq 'plus'},
+					дополнительно {$item.price|discount:$discount|price:false} {numeral number=$item.price|discount:$discount|price:false ends=$GLOBS.currency.name}
+					{elseif $item.price}
+					, цена {$item.price|discount:$discount|price:false} {numeral number=$item.price|discount:$discount|price:false ends=$GLOBS.currency.name}
+					{else}
+					{/if}
+				</option>
+				{/if}
+				{/foreach}
+				</select>
+			</div>
+		</div>
+		{/if}
+		{/foreach}
+	</fieldset>
+	{/if}
+	
+	{*
+	<!-- Раскомментировать, чтобы указать количество товаров до добавления в корзину -->
+	Сумма товара со скидкой <span class="total"></span> р.<br>
+	Сумма товара без скидки <span class="oldtotal"></span> р.<br>
+	<!-- можно использовать стрелки на клавиатуре, чтобы указать менять количество -->
+	<input type="number" name="count" class="count" value="1" step="0.5"/><br>
+	*}
+	
+	<input type="hidden" name="action" value="add" />
+	<input type="hidden" name="count" class="count" value="1" />
+	<input type="hidden" name="oid" value="{$oid}" />
+	<input type="hidden" name="time" value="{$smarty.now}" />
+	{if $price}
+	<button type="submit" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i> В корзину</button>
+	{/if}
+</form>
+{else}
 <!DOCTYPE html>
 <html lang="ru">
   {include file="$TMPL_FOLDER/inc/header.html"}
@@ -14,6 +66,7 @@
 			{include file="$TMPL_FOLDER/mod/pathline.html"}
 		</div>
 		<article class="product">
+			{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 			{include file="$TMPL_FOLDER/mod/anounces.html"}
 			{if $annotate}<p class="lead">{$annotate}</p>{/if}
 		    <div class="row-fluid">
@@ -33,9 +86,14 @@
 		{include file="$TMPL_FOLDER/mod/comments/comments.html"}
 		{include file="$TMPL_FOLDER/mod/objectsconnected.html"}
 		{include file="$TMPL_FOLDER/mod/objectsattached.html"}
+		{include file="$TMPL_FOLDER/mod/productlast.html"}
 		{include file="$TMPL_FOLDER/mod/newsline.html"}
+		{include file="$TMPL_FOLDER/mod/productbuyedwith.html"}
+		{include file="$TMPL_FOLDER/mod/productsimilar.html"}
 		{include file="$TMPL_FOLDER/mod/productpurchased.html"}
 		{include file="$TMPL_FOLDER/mod/productchecked.html"}
+		{include file="$TMPL_FOLDER/mod/productmostpopular.html"}
+		{include file="$TMPL_FOLDER/mod/productmostviewed.html"}
 		{include file="$TMPL_FOLDER/mod/productdiscount.html"}
 		{include file="$TMPL_FOLDER/mod/productrelated.html"}
     </div>
@@ -43,3 +101,4 @@
   </div>
   </body>
 </html>
+{/if}

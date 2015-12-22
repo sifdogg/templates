@@ -11,6 +11,7 @@
 			{include file="$TMPL_FOLDER/mod/pathline.html"}
 		</div>
 		<section class="gallery">
+			{if $ext_shopexpresscountdown}{include file="$TMPL_FOLDER/mod/ShopExpressCountDown.html"}{/if}
 			{include file="$TMPL_FOLDER/mod/anounces.html"}
 		{if $objinfo.type eq 4}
 			{if $ext_directories}

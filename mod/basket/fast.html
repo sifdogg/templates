@@ -1,15 +1,29 @@
+{if $basket_notify}
+<div class="alert alert-info">
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
+    <p><b>Извините</b><br>
+    В данный момент выбранного товара нет в достаточном количестве:</p>
+    <b class="inbasket-item">{$basket_notify.name} ({$basket_notify_count} {numeral number=$basket_notify_count ends=$basket_notify.units|default:'шт.,шт.,шт.'})</b>
+    {if sizeof($basket_notify_params)>0}
+    {foreach from=$basket_notify_params key=key item=value}<br />&mdash; {$GLOBS.fieldnames[7][$key]}: {$basket_notify[$key][$value]['name']} {/foreach}
+    {/if}
+</div>
+{/if}
 {if sizeof($basketdata)>0}
 {* вывод сразу всех накопительных скидок *}
-{if sizeof($discounts)}
 <script>
-var totalUserSpent = {$GLOBS.userdata.totalUserSpent|default:0};
-var totalUserCount = {$GLOBS.userdata.totalUserCount|default:0};
+var totalUserSpent = {$totalUserSpent|default:0};
+var totalUserCount = {$totalUserCount|default:0};
 var moneyRound = {$GLOBS.currency.round|default:0};
 var discounts = [];
+{if sizeof($discounts)}
 {foreach from=$discounts item=discount}discounts.push( { 'percent' : {$discount.percent|default:0}, 'money' : {$discount.money|default:0}, 'price_from' : {$discount.price_from}, 'price_to' : {$discount.price_to}, 'count_from' : {$discount.count_from}, 'count_to' : {$discount.count_to}, 'date_to_seconds' : {$discount.date_to_seconds}, 'date_from_seconds' : {$discount.date_from_seconds}, 'type': '{$discount.type}' } );{/foreach}
-</script>
 {/if}
+{if $mintotal}var minTotal = '{$mintotal}';{/if}
+</script>
+
 <script>var eShopPostIndex = '{$postindex}';</script>
+<section class="basket-content">
 <table class="table table-striped" style="width:640px;">
 <thead>
   <tr>
@@ -25,9 +39,7 @@ var discounts = [];
 {foreach from=$basketdata item=item}
   <tr id="product{$item.oid}" class="basket-item inbasket-item">
   	<td style="max-width:100px;">
-	  	<a class="thumbnail" href="{$item.vlink}">
-	  	{foreach from=$item.content.images item="im"}<img src="/{image src=$im.path width=160 folder=".160"}" alt="{$im.name}">{break}{/foreach}
-	  	</a>
+	  	<a class="thumbnail" href="{$item.vlink}">{assign var="im_showed" value=0}{if sizeof($item.params)>0}{foreach from=$item.params key=key item=value}{foreach from=$item.content.images item="im"}{if $item.content[$key][$value]['name'] eq $im.name}<img src="/{image src=$im.path width=160 folder=".160"}" alt="{$im.name}">{assign var="im_showed" value="1"}{break}{/if}{/foreach}{/foreach}{/if}{if empty($im_showed)}{foreach from=$item.content.images item="im"}<img src="/{image src=$im.path width=160 folder=".160"}" alt="{$im.name}">{break}{/foreach}{/if}</a>
   	</td>
     <td>
     	<a href="{$item.content.vlink}">{$item.content.name}</a>
@@ -36,17 +48,46 @@ var discounts = [];
 	    {foreach from=$item.params key=key item=value}<br />&mdash; {$GLOBS.fieldnames[7][$key]}: {$item.content[$key][$value]['name']} {/foreach}
 	    </small>
 	    {/if}
+	    {*
+	    <form action="/basket/?action=set" method="post">
+			{foreach from=$item.params_fieldnames item=param_fieldname}
+			{if $item.content.$param_fieldname|editable_count}
+			<div>
+				<label for="selectParams_{$param_fieldname}">
+					<small>{$GLOBS.fieldnames[7][$param_fieldname]}</small>
+				</label>
+				<select name="params[{$item.real_oid}][{$param_fieldname}]" id="selectParams_{$param_fieldname}" style="font-size:13px;line-height:13px;height:auto;width:80%;" data-oid="{$item.oid}">
+				{foreach from=$item.content.$param_fieldname item=field_value key=field_value_index}
+				{if $field_value.editable eq 'true'}
+				<option value="{$field_value_index}"
+					data-price="{$field_value.price|price:false}"
+					data-oldprice="{$field_value.price}"
+					data-type="{$field_value.type}"
+					data-name="{$field_value.name}"
+					{if $item.params.$param_fieldname eq $field_value_index}selected{/if}>
+					{$field_value.name}
+					{if $field_value.price && $field_value.type eq 'plus'},
+					дополнительно {$field_value.price|price:false} {numeral number=$field_value.price|price:false ends=$GLOBS.currency.name}
+					{elseif $field_value.price}
+					, цена {$field_value.price|price:false} {numeral number=$field_value.price|price:false ends=$GLOBS.currency.name}
+					{else}
+					{/if}
+				</option>
+				{/if}
+				{/foreach}
+				</select>
+			</div>
+			{/if}
+			{/foreach}
+		</form>
+		*}
     </td>
     <td nowrap="nowrap">
-	    <sup class="badge badge-success {if $basketdiscount || (!$item.content.discount.percent && !$item.content.discount.money)}hide{/if}">
+	    <sup class="badge badge-success {if $basketdiscount || !$item.content.discount}hide{/if}">
 	    	Скидка
-	    		<span class="discount">
-		    		{if $item.content.discount.percent}{$item.content.discount.percent}% {if $item.content.discount.money} и {/if}{/if}
-		    		{if $item.content.discount.money}{$item.content.discount.money|price:false} {numeral number=$item.content.discount.money|price:false ends=$GLOBS.currency.name}{/if}
-	    		</span>
+    		<span class="discount">{$item.content.discount.human}</span>
 	    </sup>
     </td>
-    
     <td nowrap="nowrap">
     	<span class="count">
 	    	{$item.count} {numeral number=$item.count ends=$item.content.units|default:'шт.,шт.,шт.'}
@@ -58,6 +99,7 @@ var discounts = [];
     	<span class="price"
 			data-oldprice="{$item.content.oldprice|price:false}"
 			data-price="{$item.content.price|price:false}"
+			data-realprice="{$item.content.realprice|price:false}"
 			data-count="{$item.count}"
 			data-units="{$item.content.units|default:'шт.,шт.,шт.'}"
 			data-currency="{$GLOBS.currency.name}"
@@ -79,6 +121,7 @@ var discounts = [];
 {/foreach}
 </tbody>
 </table>
+</section>
 <blockquote class="pull-right">
 	<p>
 		<span id="basketCount">{$count}</span> шт. на сумму: <b><span id="basketTotal">{$total|price:false}</span> {numeral number=$total|price:false ends=$GLOBS.currency.name}</b><br />
@@ -146,26 +189,57 @@ var discounts = [];
 			</div>
 		</div>
 		{/if}
-		
-		{if $item.htmltype eq 'delivery' && sizeof($delivery)>0}				
+		{*if $item.htmltype eq 'adresfield'}
+		<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
+			<label class="control-label" for="input{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
+			<div class="controls">
+				{if $order_fields[$item.name]['value']}
+				<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{$order_fields[$item.name]['value']}" placeholder="{$item.description}" style="width:97%;">
+				{else}
+				<input type="text" id="input{$item.name|capitalize}" name="{$item.name}" value="{if $GLOBS.userdata[$item.name] neq 'guest'}{$GLOBS.userdata[$item.name]}{/if}" placeholder="{$item.description}" style="width:97%;">
+				{/if}
+				{if $order_fields[$item.name]['error']} <span class="help-inline">Обязательно для заполнения</span>{/if}
+			</div>
+		</div>
+		<link href="/media0/css/suggestions.css" type="text/css" rel="stylesheet" />
+		<!--[if lt IE 10]>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="https://dadata.ru/static/js/jquery.suggestions-4.3.min.js"></script>
+		<script type="text/javascript">
+		    $("#input{$item.name|capitalize}").suggestions({
+		        serviceUrl: "https://dadata.ru/api/v2/suggest/address",
+		        type: "ADDRESS",
+		        token: "b94c274fc11fbd3fa9f26c57047e57d0287ab91f",
+		        onSelect: function(suggestion)
+		        {
+		            $('#hiddenPostindex').val(suggestion.data.postal_code).change();
+		            $('#hiddenCity').val(suggestion.data.city).change();
+		            $('#hiddenRegion').val(suggestion.data.region).change();
+		        }
+		    });
+		</script>
+		{/if*}
+		{if $item.htmltype eq 'delivery' && sizeof($delivery)>0}
 		<div class="control-group {if $order_fields[$item.name]['error']} error{/if}">
 			<label class="control-label" for="select{$item.name|capitalize}">{$item.runame}{if $item.necessary eq 'true'} <sup style="color:red;">!</sup> {/if}</label>
 			<div class="controls">
 				<select name="delivery" id="select{$item.name|capitalize}" style="width:93%;">
+					<option value="">Выберите тип доставки</option>
 					{foreach from=$delivery item=delivery_item key=delivery_key}
 					<option value="{$delivery_key}"
-							{if $GLOBS.delivery[$delivery_item.name]}data-value="{$delivery_item.name}"{/if}
-							data-total-from="{$delivery_item.total_from|default:0}"
-							data-total-to="{$delivery_item.total_to|default:0}"
-							data-price="{$delivery_item.price|default:0}"
-							{if $delivery_item.disabled} disabled {/if}>
+						{if $GLOBS.delivery[$delivery_item.name]}data-value="{$delivery_item.name}"{/if}
+						data-total-from="{$delivery_item.total_from|default:0}"
+						data-total-to="{$delivery_item.total_to|default:0}"
+						data-price="{$delivery_item.price|default:0}"
+						{if $delivery_item.disabled} disabled {/if}>
 
-							{if $GLOBS.delivery[$delivery_item.name]}
-								{$GLOBS.delivery[$delivery_item.name]}
-							{else}
-								{$delivery_item.name}
-								{if $delivery_item.price}( {$delivery_item.price|price:false} {numeral number=$delivery_item.price|price:false ends=$GLOBS.currency.name}){/if}
-							{/if}
+						{if $GLOBS.delivery[$delivery_item.name]}
+							{$GLOBS.delivery[$delivery_item.name]}
+						{else}
+							{$delivery_item.name}
+							{if $delivery_item.price}( {$delivery_item.price|price:false} {numeral number=$delivery_item.price|price:false ends=$GLOBS.currency.name}){/if}
+						{/if}
 						</option>
 					{/foreach}
 				</select>

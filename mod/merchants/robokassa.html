@@ -3,7 +3,10 @@
 {else}
 <form method="post" action="https://merchant.roboxchange.com/Index.aspx" class="payment-form pull-left">
 {/if}
- 
+ 	{if $GLOBS.currency.code neq 'RUR' && $GLOBS.currency.code neq 'RUB'}
+ 	{assign var=summ value=ceil($summ/$GLOBS.allcurrencies.RUB.course)}
+ 	{/if}
+ 	
 	<input type="hidden" name="MrchLogin" value="{$GLOBS.merchants.robokassa.login}" />
 	<input type="hidden" name="OutSum" value="{$summ}" />
 	<input type="hidden" name="InvId" value="{$order_id}" />
